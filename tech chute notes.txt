@@ -1,0 +1,43 @@
+sign in by email, find multiple accounts with same email?
+
+update relevant dropdowns admin page, when deleted/added
+
+removing a category...deletes from listing? (check that no listings have that category before deleting)
+add update (alter to: )
+
+list tech put everything in a cookies, easier to get to preview tech and back
+if cookie is set prepopulate addTech
+var value = $.cookie('artname');
+
+
+SUBCATEGORYID":["Subcategoryid cannot be blank."],
+"PATENTSTATUS":["Patentstatus cannot be blank."],
+"LISTAGREEMENT":["Listagreement cannot be blank."],
+"RIGHTSDETAILS":["Rightsdetails cannot be blank."],
+"RIGHTS":["Rights must be a number."
+
+
+
+// delete the rows matching the specified condition
+Post::model()->deleteAll($condition,$params);
+// delete the rows matching the specified condition and primary key(s)
+Post::model()->deleteByPk($pk,$condition,$params);
+
+
+
+
+
+
+Safe reading 
+On the same basis, as above, if a particular cookie does not exists, a corresponding object (CHttpCookie instance) for it will not be created! Trying to read such cookie will result in error "Trying to get property of non-object". To avoid that, it is always better to read a cookie using ternary operator, like that:
+
+$value = isset(Yii::app()->request->cookies['cookie_name']) ? Yii::app()->request->cookies['cookie_name']->value : '';
+// or
+$value = Yii::app()->request->cookies->contains('cookie_name') ?
+Yii::app()->request->cookies['cookie_name']->value : '';
+This way, you'll get either cookie value or an empty string.
+
+This example also gives us idea how to check, if particular cookie exits:
+
+$is_cookie = !isset(Yii::app()->request->cookies['cookie_name']);
+
