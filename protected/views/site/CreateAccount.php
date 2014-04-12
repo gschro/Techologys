@@ -2,21 +2,23 @@
 
      
      <div class ="container">
+         <form method="post" id="form" action="<?php echo Yii::app()->createUrl('Site/createAccount')?>">
          <div class="row">
              <div class="pagination-centered">
                  <p>
                  <ul class="media-list">
-                 <li><input type="text" placeholder="First Name" id="firstName"></li>
-                 <li><input type="text" placeholder="Last Name" id="lastName"></li>                 
-                 <li><input type="text" placeholder="University/Company" id="universityCompany"></li>                 
-                 <li><input type="text" placeholder="ex. person@univ.edu" id="email"></li>
-                 <li><input type="password" placeholder="password" id="password"></li>
-                 <li><input type="password" placeholder="confirm password" id="confirmPassword"></li>                 
+                 <li><input type="text" placeholder="First Name" name="firstName"></li>
+                 <li><input type="text" placeholder="Last Name" name="lastName"></li>                 
+                 <li><input type="text" placeholder="University/Company" name="universityCompany"></li>                 
+                 <li><input type="text" placeholder="ex. person@univ.edu" name="email"></li>
+                 <li><input type="password" placeholder="password" name="password"></li>
+                 <li><input type="password" placeholder="confirm password" name="confirmPassword"></li>                 
                  </ul>
-                 <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('Site/Investor')?>">Create Account</a>
+                 <input type = "submit" class="btn btn-success" value="Create Account"/>
                  </p>
              </div>
          </div>
+         </form>
      </div>
 
 <?php include 'protected/views/layouts/Footer.php'?>

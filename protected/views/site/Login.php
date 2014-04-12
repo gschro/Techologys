@@ -3,10 +3,10 @@
      
      <div class ="container">
        <?php  
-            if($message !==""){
+            //if($message !==""){
              echo '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'.
               $message . '</div>';          
-            }       
+            //}       
         ?> 
        <div class="pagination-centered"><h1>Sign In</h1></div><br>
        <div class="pagination-centered">
@@ -22,7 +22,7 @@
          <a class='btn btn-primary btn-large'>Sign in with Twitter</a><br><br>
          <a class='btn btn-primary btn-large'>Sign in with Facebook</a><br><br>
          <a class='btn btn-primary btn-large'>Sign in with LinkedIn</a><br><br>         
-         <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('Site/CreateAccount')?>">Create Account</a>                  
+         <a class="btn btn-success" href="<?php echo Yii::app()->createUrl('Site/CreateAccountView')?>">Create Account</a>                  
        </div>
        </p>
     </div>

@@ -147,8 +147,7 @@ class SiteController extends Controller
                 $email = $_POST['email'];
                 $user = EmailAccount::model()->findByAttributes(array('EMAIL'=>$email));
                 if(!is_null($user)){
-                    $pass = $_POST['password'].$user->PSALT;
-                    if($user->HASHPASS===$pass){
+                    if(password_verify($_POST['password'],$user->HASHPASS)){
                         Yii::app()->request->cookies['user'] = new CHttpCookie('user', $user->ID);
                         $page = Yii::app()->request->cookies['page']->value;
                         $this->render($page,array("data"=>$page));                                    
@@ -170,10 +169,51 @@ class SiteController extends Controller
 		$this->redirect(Yii::app()->homeUrl);
 	}
         
-        public function actionCreateAccount()
-        {
-            $this->render('CreateAccount');
+    public function actionCreateAccountView()
+    {
+        $this->render('CreateAccount');
+    }
+
+    public function actionCreateAccount(){
+
+        $message = "";
+        $email = $_POST['password'];
+        $emailExists = EmailAccount::model()->findbyAttributes(array('EMAIL'=>$email));
+        if(empty($emailExists->EMAIL)){
+            $transaction = Yii::app()->db->beginTransaction();
+
+            try{
+
+                    $newEmailAccount = new EmailAccount();
+                    $newEmailAccount->EMAIL = $email;
+                    $newEmailAccount->FIRSTNAME = $_POST['firstName'];
+                    $newEmailAccount->LASTNAME = $_POST['firstName'];
+                    $newEmailAccount->HASHPASS = password_hash($_POST['password'],PASSWORD_DEFAULT);
+                    //$newEmailAccount->COMPANY = $_POST['firstName'];                    
+                    $newEmailAccount->save();
+
+                    $newUser = new User();
+                    $newUser->TYPE = "EMAIL";
+                    $newUser->ADMIN = 0;
+                    $newUser->TYPEID = $newEmailAccount->USERID;
+                    $newUser->save();
+
+                    $transaction->commit();
+                    $this->render('Investor', array("message"=>$message));
+                }
+            catch(Exception $e){
+                   $message = "Could not create account ".$e->getMessage();
+                   $transaction->rollBack(); 
+                   $this->render('Login', array("message"=>$message));
+            }    
         }
+        else{
+            $message = "Account with this email already exists";
+            $this->render('Login', array("message"=>$message));
+        }
+
+    //java script checks if password and confirm password are the same.        
+    }
         
 	public function actionTechList()
 	{
