@@ -221,21 +221,21 @@ class SiteController extends Controller
                     }
                     else{
 
-                   $message = "Could not create account STILL ".CJSON::Encode($newEmailAccount->getErrors());
+                   $message = "Could not create account ".CJSON::Encode($newEmailAccount->getErrors());
                    $transaction->rollBack(); 
-                   $this->render('Login', array("message"=>$message));
+                   $this->render('CreateAccount', array("message"=>$message));
 
                     }
             }
             catch(Exception $e){
                    $message = "Could not create account ".$e->getMessage();
                    $transaction->rollBack(); 
-                   $this->render('Login', array("message"=>$message));
+                   $this->render('CreateAccount', array("message"=>$message));
             }    
         }
         else{
             $message = "Account with this email already exists";
-            $this->render('Login', array("message"=>$message));
+            $this->render('CreateAccount', array("message"=>$message));
         }
 
     //java script checks if password and confirm password are the same.        

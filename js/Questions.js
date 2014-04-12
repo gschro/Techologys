@@ -121,9 +121,12 @@ function getListingCategories(){
         success: function(data){
             dat = JSON.parse(data);
             $("#listofqcategories").empty();
+            $("#category").empty();            
             for(var i = 0; i < dat.categories.length; i++){
                 $("#listofqcategories").append($("<option></option>")
                 .attr("value",dat.categories[i].ID).text(dat.categories[i].CATEGORY));
+                $("#category").append($("<option></option>")
+                .attr("value",dat.categories[i].ID).text(dat.categories[i].CATEGORY));                
             }         
         }
     });
@@ -248,10 +251,12 @@ function getMainCategoryData(){
         success: function(data){
             var dat = JSON.parse(data);
             $("#listofmcats").empty();
+            $("#maincat").empty();            
             for(var i = 0; i < dat.categories.length; i++){
-              //  alert(dat.questions[i].QUESTION);
                 $("#listofmcats").append($("<option></option>")
                 .attr("value",dat.categories[i].ID).text(dat.categories[i].CATEGORY));
+                $("#maincat").append($("<option></option>")
+                .attr("value",dat.categories[i].ID).text(dat.categories[i].CATEGORY));                
             }
         }
     });      
@@ -265,7 +270,8 @@ function addMainCategory(){
       data: {"mc":cat},
       success: function(data){
           var dat = JSON.parse(data);
-          getMainCategoryData();       
+          getMainCategoryData();  
+         // getSubCatMainCats();     
           alert(dat.message);
       }
     });             
@@ -279,7 +285,8 @@ function removeMainCategory(){
       data: {"mc":catId},
       success: function(data){
           var dat = JSON.parse(data);
-          getMainCategoryData();              
+          getMainCategoryData();       
+          //getSubCatMainCats();       
       }
     });     
 }
@@ -346,5 +353,3 @@ function toggleBtn(id){
         $(id).attr("value","View All");  
     }    
 }
-
-
