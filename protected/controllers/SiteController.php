@@ -165,6 +165,7 @@ class SiteController extends Controller
 	 */
 	public function actionLogout()
 	{
+        //$thing->Save();
 		unset(Yii::app()->request->cookies['user']);
 		$this->redirect(Yii::app()->homeUrl);
 	}
@@ -213,6 +214,9 @@ class SiteController extends Controller
                     $message = "Commit";
                     $transaction->commit();
                     $message .= "not commit";
+                    //Yii::app()->request->cookies['user'];
+                    Yii::app()->request->cookies['user'] = new CHttpCookie('user', $newUser->ID);
+
                     $this->render('Investor', array("message"=>$message));
                     }
                     else{
