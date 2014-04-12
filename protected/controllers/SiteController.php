@@ -150,7 +150,7 @@ class SiteController extends Controller
                     if(password_verify($_POST['password'],$user->HASHPASS)){
                         Yii::app()->request->cookies['user'] = new CHttpCookie('user', $user->ID);
                         $page = Yii::app()->request->cookies['page']->value;
-                        $this->render($page,array("data"=>$page));                                    
+                        $this->render($page,array("data"=>$page, "message"=>"login successful"));                                    
                     }
                     else{
                       $this->render('Login',array("message"=>"Incorrect email/password"));
@@ -177,26 +177,27 @@ class SiteController extends Controller
     public function actionCreateAccount(){
 
         $message = "test";
-        $email = $_POST['password'];
+        $email = $_POST['email'];
         $emailExists = EmailAccount::model()->findbyAttributes(array('EMAIL'=>$email));
         if(empty($emailExists->EMAIL)){
             $transaction = Yii::app()->db->beginTransaction();
 
             try{
+                    $newUser = new User();
+                    $newUser->TYPE = "EMAIL";
+                    $newUser->ADMIN = 0;
+                    $newUser->save();
 
                     $newEmailAccount = new EmailAccount();
                     $newEmailAccount->EMAIL = $email;
                     $newEmailAccount->FIRSTNAME = $_POST['firstName'];
-                    $newEmailAccount->LASTNAME = $_POST['firstName'];
+                    $newEmailAccount->LASTNAME = $_POST['lastName'];
                     $newEmailAccount->HASHPASS = password_hash($_POST['password'],PASSWORD_DEFAULT);
                     //$newEmailAccount->COMPANY = $_POST['firstName'];                    
-                    $newEmailAccount->save();
+                    $newEmailAccount->USERID = $newUser->ID;
+                    //$newEmailAccount->save();
 
-                    $newUser = new User();
-                    $newUser->TYPE = "EMAIL";
-                    $newUser->ADMIN = 0;
-                    $newUser->TYPE = $newEmailAccount->USERID;
-                    $newUser->save();
+                    if($newEmailAccount->save()){
 
                     $secItem1 = new SecurityItem();
                     $secItem1->EMAILACCOUNTID = $newEmailAccount->ID;
@@ -209,10 +210,19 @@ class SiteController extends Controller
                     $secItem2->SECURITYQUESTIONID = $_POST['secQuest2'];
                     $secItem2->ANSWER = $_POST['answer2'];
                     $secItem2->save();
-
+                    $message = "Commit";
                     $transaction->commit();
+                    $message .= "not commit";
                     $this->render('Investor', array("message"=>$message));
-                }
+                    }
+                    else{
+
+                   $message = "Could not create account STILL ".CJSON::Encode($newEmailAccount->getErrors());
+                   $transaction->rollBack(); 
+                   $this->render('Login', array("message"=>$message));
+
+                    }
+            }
             catch(Exception $e){
                    $message = "Could not create account ".$e->getMessage();
                    $transaction->rollBack(); 

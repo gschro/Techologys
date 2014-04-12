@@ -7,7 +7,6 @@ return array(
 		'EMAIL' => '',
 		'FIRSTNAME' => '',
 		'LASTNAME' => '',
-		'PSALT' => '',
 		'HASHPASS' => '',
 	),
 	'sample2'=>array(
@@ -15,7 +14,6 @@ return array(
 		'EMAIL' => '',
 		'FIRSTNAME' => '',
 		'LASTNAME' => '',
-		'PSALT' => '',
 		'HASHPASS' => '',
 	),
 	*/

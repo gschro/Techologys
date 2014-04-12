@@ -9,8 +9,7 @@
  * @property string $EMAIL
  * @property string $FIRSTNAME
  * @property string $LASTNAME
- * @property integer $PSALT
- * @property integer $HASHPASS
+ * @property string $HASHPASS
  */
 class EmailAccount extends CActiveRecord
 {
@@ -30,12 +29,13 @@ class EmailAccount extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS', 'required'),
-			array('USERID, PSALT, HASHPASS', 'numerical', 'integerOnly'=>true),
+			array('USERID, EMAIL, FIRSTNAME, LASTNAME, HASHPASS', 'required'),
+			array('USERID', 'numerical', 'integerOnly'=>true),
 			array('EMAIL, FIRSTNAME, LASTNAME', 'length', 'max'=>250),
+			array('HASHPASS', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS', 'safe', 'on'=>'search'),
+			array('ID, USERID, EMAIL, FIRSTNAME, LASTNAME, HASHPASS', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -63,7 +63,6 @@ class EmailAccount extends CActiveRecord
 			'EMAIL' => 'Email',
 			'FIRSTNAME' => 'Firstname',
 			'LASTNAME' => 'Lastname',
-			'PSALT' => 'Psalt',
 			'HASHPASS' => 'Hashpass',
 		);
 	}
@@ -96,9 +95,7 @@ class EmailAccount extends CActiveRecord
 
 		$criteria->compare('LASTNAME',$this->LASTNAME,true);
 
-		$criteria->compare('PSALT',$this->PSALT);
-
-		$criteria->compare('HASHPASS',$this->HASHPASS);
+		$criteria->compare('HASHPASS',$this->HASHPASS,true);
 
 		return new CActiveDataProvider('EmailAccount', array(
 			'criteria'=>$criteria,

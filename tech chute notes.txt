@@ -1,3 +1,7 @@
+VALIDATION ON ACCOUNT CREATION/USER & EMAIL SAVES
+
+
+
 sign in by email, find multiple accounts with same email?
 
 update relevant dropdowns admin page, when deleted/added
