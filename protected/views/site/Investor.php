@@ -1,4 +1,10 @@
 <?php include 'protected/views/layouts/Header.php' ?>
+       <?php  
+            //if($message !==""){
+             echo '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'.
+              $message . '</div>';          
+            //}       
+        ?> 
 
 
 <div class ="container">

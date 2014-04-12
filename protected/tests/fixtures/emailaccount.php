@@ -9,10 +9,6 @@ return array(
 		'LASTNAME' => '',
 		'PSALT' => '',
 		'HASHPASS' => '',
-		'SECURITYQ1' => '',
-		'SECURITYQ2' => '',
-		'SECURITYQ1HASH' => '',
-		'SECURITYQ2HASH' => '',
 	),
 	'sample2'=>array(
 		'USERID' => '',
@@ -21,10 +17,6 @@ return array(
 		'LASTNAME' => '',
 		'PSALT' => '',
 		'HASHPASS' => '',
-		'SECURITYQ1' => '',
-		'SECURITYQ2' => '',
-		'SECURITYQ1HASH' => '',
-		'SECURITYQ2HASH' => '',
 	),
 	*/
 );

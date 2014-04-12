@@ -11,10 +11,6 @@
  * @property string $LASTNAME
  * @property integer $PSALT
  * @property integer $HASHPASS
- * @property string $SECURITYQ1
- * @property string $SECURITYQ2
- * @property integer $SECURITYQ1HASH
- * @property integer $SECURITYQ2HASH
  */
 class EmailAccount extends CActiveRecord
 {
@@ -34,12 +30,12 @@ class EmailAccount extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS, SECURITYQ1, SECURITYQ2, SECURITYQ1HASH, SECURITYQ2HASH', 'required'),
-			array('USERID, PSALT, HASHPASS, SECURITYQ1HASH, SECURITYQ2HASH', 'numerical', 'integerOnly'=>true),
+			array('USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS', 'required'),
+			array('USERID, PSALT, HASHPASS', 'numerical', 'integerOnly'=>true),
 			array('EMAIL, FIRSTNAME, LASTNAME', 'length', 'max'=>250),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS, SECURITYQ1, SECURITYQ2, SECURITYQ1HASH, SECURITYQ2HASH', 'safe', 'on'=>'search'),
+			array('ID, USERID, EMAIL, FIRSTNAME, LASTNAME, PSALT, HASHPASS', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,6 +48,7 @@ class EmailAccount extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'uSER' => array(self::BELONGS_TO, 'User', 'USERID'),
+			'securityitems' => array(self::HAS_MANY, 'Securityitem', 'EMAILACCOUNTID'),
 		);
 	}
 
@@ -68,10 +65,6 @@ class EmailAccount extends CActiveRecord
 			'LASTNAME' => 'Lastname',
 			'PSALT' => 'Psalt',
 			'HASHPASS' => 'Hashpass',
-			'SECURITYQ1' => 'Securityq1',
-			'SECURITYQ2' => 'Securityq2',
-			'SECURITYQ1HASH' => 'Securityq1 Hash',
-			'SECURITYQ2HASH' => 'Securityq2 Hash',
 		);
 	}
 
@@ -106,14 +99,6 @@ class EmailAccount extends CActiveRecord
 		$criteria->compare('PSALT',$this->PSALT);
 
 		$criteria->compare('HASHPASS',$this->HASHPASS);
-
-		$criteria->compare('SECURITYQ1',$this->SECURITYQ1,true);
-
-		$criteria->compare('SECURITYQ2',$this->SECURITYQ2,true);
-
-		$criteria->compare('SECURITYQ1HASH',$this->SECURITYQ1HASH);
-
-		$criteria->compare('SECURITYQ2HASH',$this->SECURITYQ2HASH);
 
 		return new CActiveDataProvider('EmailAccount', array(
 			'criteria'=>$criteria,

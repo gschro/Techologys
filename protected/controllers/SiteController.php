@@ -176,7 +176,7 @@ class SiteController extends Controller
 
     public function actionCreateAccount(){
 
-        $message = "";
+        $message = "test";
         $email = $_POST['password'];
         $emailExists = EmailAccount::model()->findbyAttributes(array('EMAIL'=>$email));
         if(empty($emailExists->EMAIL)){
@@ -195,8 +195,20 @@ class SiteController extends Controller
                     $newUser = new User();
                     $newUser->TYPE = "EMAIL";
                     $newUser->ADMIN = 0;
-                    $newUser->TYPEID = $newEmailAccount->USERID;
+                    $newUser->TYPE = $newEmailAccount->USERID;
                     $newUser->save();
+
+                    $secItem1 = new SecurityItem();
+                    $secItem1->EMAILACCOUNTID = $newEmailAccount->ID;
+                    $secItem1->SECURITYQUESTIONID = $_POST['secQuest1'];
+                    $secItem1->ANSWER = $_POST['answer1'];
+                    $secItem1->save();
+
+                    $secItem2 = new SecurityItem();
+                    $secItem2->EMAILACCOUNTID = $newEmailAccount->ID;
+                    $secItem2->SECURITYQUESTIONID = $_POST['secQuest2'];
+                    $secItem2->ANSWER = $_POST['answer2'];
+                    $secItem2->save();
 
                     $transaction->commit();
                     $this->render('Investor', array("message"=>$message));
