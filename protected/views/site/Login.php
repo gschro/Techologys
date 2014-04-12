@@ -1,13 +1,6 @@
-<?php include 'protected/views/layouts/Header.php'?>
-
+<?php include 'protected/views/layouts/Header.php';?>
      
      <div class ="container">
-       <?php  
-            //if($message !==""){
-             echo '<div class="alert alert-error"><button type="button" class="close" data-dismiss="alert">&times;</button>'.
-              $message . '</div>';          
-            //}       
-        ?> 
        <div class="pagination-centered"><h1>Sign In</h1></div><br>
        <div class="pagination-centered">
          <form method="post" id="signin" action="<?php echo Yii::app()->createUrl('site/SignIn')?>">
@@ -26,4 +19,5 @@
        </div>
        </p>
     </div>
+
 <?php include 'protected/views/layouts/Footer.php'?>

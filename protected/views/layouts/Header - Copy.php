@@ -1,8 +1,8 @@
 
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">    
  <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta name="language" content="en" />         
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <meta name="language" content="en" />         
     <title>TechChute</title>
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css">    
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>     
@@ -95,5 +95,23 @@
         })
     });
 </script>
-     
+
+<div class="container">
+  <div class="content">
+    
+  </div>
+</div>
+
+<div class="container">
+    <p>
+    <div style="" class="pagination-centered"><small>
+        TechChute<br>
+        Copyright 2013<br>
+        All Rights Reserved</small>
+    </div>    
+    </p>
+</div>  
+<!--   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+</html>
+
      
