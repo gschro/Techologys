@@ -7,7 +7,10 @@
     </div>    
     </p>
 </div>  
-   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<!--   <script src="//ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>-->
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">$(document).ready(function () { $('.dropdown-toggle').dropdown(); });</script>
 </html>
 
