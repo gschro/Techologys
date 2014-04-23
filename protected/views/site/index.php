@@ -1,11 +1,18 @@
-<?php include 'protected/views/layouts/Header.php' ?>
+<?php 
+    if(isset($_SESSION['user'])){
+        include 'protected/views/layouts/HeaderSecure.php';
+     }
+     else{
+        include 'protected/views/layouts/Header.php';
+     }
+?>
 
 
 <div class ="container">
 
 
     <div class ="hero-unit">
-        <h1>TechChute</h1>        <p><a href="<?php echo Yii::app()->createUrl('Site/Login'); ?>" class="btn btn-primary btn-large pull-right">Sign Up &raquo;</a><p/>
+        <h1>TechChute</h1>        <p><a href="<?php echo Yii::app()->createUrl('Site/LoginView'); ?>" class="btn btn-primary btn-large pull-right">Sign Up &raquo;</a><p/>
         <p>Welcome to TechChute, connecting Technology and investors</p>         
     </div>
 

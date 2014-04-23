@@ -1,4 +1,4 @@
-<?php include 'protected/views/layouts/Header.php'?>
+<?php include 'protected/views/layouts/HeaderSecure.php'?>
      
      <div class ="container">
         <form method="post" action="<?php echo Yii::app()->createUrl('Site/ListTech')?>">

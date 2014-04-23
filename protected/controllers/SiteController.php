@@ -82,31 +82,28 @@ class SiteController extends Controller
 	}
 
 	/**
-	 * Displays the login page
+	 * Logs the user in
 	 */
-	public function actionLogin()
-	{
-//		$model=new LoginForm;
-//
-//		// if it is ajax validation request
-//		if(isset($_POST['ajax']) && $_POST['ajax']==='login-form')
-//		{
-//			echo CActiveForm::validate($model);
-//			Yii::app()->end();
-//		}
-//
-//		// collect user input data
-//		if(isset($_POST['LoginForm']))
-//		{
-//			$model->attributes=$_POST['LoginForm'];
-//			// validate user input and redirect to the previous page if valid
-//			if($model->validate() && $model->login())
-//				$this->redirect(Yii::app()->user->returnUrl);
-//		}
-//		// display the login form
-		$this->render('Login',array("message"=>""));
-                //,array('model'=>$model)
-	}
+	// public function actionLogin()
+	// {
+ //        session_start('ses');
+ //        $user = $_POST['user'];
+ //        $user = EmailAccount::model()->findByPk($user);
+ //        if(isset($user)){
+ //            $_SESSION['user'] = $user->ID;
+ //            $page = $_POST['page'];
+ //            $this->render($page,array("message"=>""));            
+ //        }else{
+ //            $this->render('Login',array("message"=>"Incorrect Email/Password combination"));            
+ //        }
+	// }
+
+    /**
+     * Displays the login page
+     */
+    public function actionLoginView(){
+        $this->render('Login',array("message"=>""));        
+    }
         
         public function actionMission()
         {
@@ -114,59 +111,45 @@ class SiteController extends Controller
         }
 
         public function actionUniversity(){
-            $signedIn = null;
-            Yii::app()->request->cookies['page'] = new CHttpCookie('page','University');
-            if(!is_null(Yii::app()->request->cookies['user'])){
-            $signedIn = Yii::app()->request->cookies['user']->value;}
-            if(!is_null($signedIn)){
-                $this->render('University');
-            }
-            else{
-                $message = "Please Sign In";
-                $this->render('Login',array("message"=>$message));
-            }            
+            $this->render('University');          
         }
         
-        public function actionInvestor(){
-            $signedIn = null;
-            Yii::app()->request->cookies['page'] = new CHttpCookie('page','Investor');            
-            if(!is_null(Yii::app()->request->cookies['user'])){            
-            $signedIn = Yii::app()->request->cookies['user']->value;
-            }
-            if(!is_null($signedIn)){
-                $this->render('Investor');
-            }
-            else{
-                $message = "Please Sign In";
-                $this->render('Login',array("message"=>$message));
-            }            
-        }
+    public function actionInvestor(){
+        $this->render('Investor');
+    }
         
-        	public function actionSignIn()
+    public function actionSignIn()
 	{
-                $email = $_POST['email'];
-                $user = EmailAccount::model()->findByAttributes(array('EMAIL'=>$email));
-                if(!is_null($user)){
-                    if(password_verify($_POST['password'],$user->HASHPASS)){
-                        Yii::app()->request->cookies['user'] = new CHttpCookie('user', $user->ID);
-                        $page = Yii::app()->request->cookies['page']->value;
-                        $this->render($page,array("data"=>$page, "message"=>"login successful"));                                    
-                    }
-                    else{
-                      $this->render('Login',array("message"=>"Incorrect email/password"));
-                    }
+        $email = $_POST['email'];
+        $user = EmailAccount::model()->findByAttributes(array('EMAIL'=>$email));
+        if(!is_null($user)){
+            if(password_verify($_POST['password'],$user->HASHPASS)){
+                session_start();
+                $_SESSION['user'] = $user->ID;
+                if(isset($_POST['page'])){
+                    $page = $_POST['page'];                    
                 }
                 else{
-                    $this->render('Login',array("message"=>"Incorrect email/password"));
+                    $page = "index";
                 }
+                $this->render($page,array("data"=>$page, "message"=>"login successful"));                                    
+            }
+            else{
+              $this->render('Login',array("message"=>"Incorrect Email/Password combination"));
+            }
+        }
+        else{
+            $this->render('Login',array("message"=>"Incorrect Email/Password combination"));
+        }
 	}
 	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
 	public function actionLogout()
 	{
-        //$thing->Save();
-		unset(Yii::app()->request->cookies['user']);
+        session_start();
+        unset($_SESSION['user']);        
+        session_destroy();
 		$this->redirect(Yii::app()->homeUrl);
 	}
         
@@ -211,11 +194,12 @@ class SiteController extends Controller
                     $secItem2->SECURITYQUESTIONID = $_POST['secQuest2'];
                     $secItem2->ANSWER = $_POST['answer2'];
                     $secItem2->save();
-                    $message = "Commit";
+                    
                     $transaction->commit();
-                    $message .= "not commit";
                     //Yii::app()->request->cookies['user'];
-                    Yii::app()->request->cookies['user'] = new CHttpCookie('user', $newUser->ID);
+                    session_start();
+                    $_SESSION['user'] = $newUser->ID;
+                    //Yii::app()->request->cookies['user'] = new CHttpCookie('user', $newUser->ID);
 
                     $this->render('Investor', array("message"=>$message));
                     }
@@ -302,9 +286,9 @@ class SiteController extends Controller
                 }
                 $listing->RIGHTSDETAILS = $rd;
                 $listing->LISTAGREEMENT = $_POST['agreement'];                
-                $listing->USERID = Yii::app()->request->cookies['user'];
+                $listing->USERID = $_SESSION['user'];
                 $jsonListing = CJSON::Encode($listing);
-                Yii::app()->request->cookies['listing'] = new CHttpCookie('listing', $jsonListing);
+                $_SESSION['listing'] = $jsonListing;
                 
                 //$listing->TECHID = 1234;
               //  $message = $listing->genGUID();

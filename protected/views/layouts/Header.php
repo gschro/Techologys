@@ -8,6 +8,16 @@
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>     
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
  </head>
+ <?php
+    //retrieve session data
+     if(!isset($_SESSION)){
+      session_start();
+     }
+    if(!isset($_SESSION['user'])){
+      //  $url = Yii::app()->createUrl('site/LoginView');      
+      //  $this->redirect($url);
+    }
+?>
  <body>
      
      <div class ="navbar">
@@ -29,11 +39,12 @@
                         <ul class="dropdown-menu pull-right">
                         <!--<li><a tabindex="-1" href="#">Settings</a></li>-->
                         <?php           
-                            if(!is_null(Yii::app()->request->cookies['user'])){                         
+                            if(isset($_SESSION['user'])){                         
                                 echo"<li><a href='".Yii::app()->createUrl('Site/Logout')."' class='navbar-btn'>Log Out</a></li>";            
-                                $id = (string)Yii::app()->request->cookies['user'];
+                                $id = (string)$_SESSION['user'];
                                 $id = strval($id);
-                                if(!is_null(User::model()->findByPk($id))){
+                                $userMoel = User::model()->findByPk($id);
+                                if(isset($userModel)){
                                     $user = User::model()->findByPk($id);
                                     if($user->ADMIN){
                                         echo "<li><a href='".Yii::app()->createUrl('Admin/index')."' class='navbar-btn'>Admin</a></li>";
@@ -41,7 +52,7 @@
                                 }                
                             }
                             else{
-                                echo'<li><a tabindex="-1" href="'.Yii::app()->CreateUrl('Site/Login').'">Sign In</a></li>';
+                                echo'<li><a tabindex="-1" href="'.Yii::app()->CreateUrl('Site/LoginView').'">Sign In</a></li>';
                             }            
                         ?>    
                         <li><a tabindex="-1" href="#">Help</a></li>    

@@ -1,4 +1,4 @@
-<?php include 'protected/views/layouts/Header.php'?>
+<?php include 'protected/views/layouts/HeaderSecure.php'?>
 <script><?php include 'js/Questions.js'?></script>
      
      <div class ="container">

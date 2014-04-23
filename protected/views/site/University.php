@@ -1,4 +1,4 @@
-<?php include 'protected/views/layouts/Header.php' ?>
+<?php include 'protected/views/layouts/HeaderSecure.php' ?>
 
 
 <div class ="container">
@@ -6,7 +6,8 @@
         <div class="span8">
             <div class="row">
                 <h2>Welcome, <?php 
-                    $ea = EmailAccount::model()->findByPK(Yii::app()->request->cookies['user']->value);
+                    $user = $_SESSION['user'];
+                    $ea = EmailAccount::model()->findByPK($user);
                     echo $ea->FIRSTNAME;
                 ?>!</h2>                                    
             </div>     
