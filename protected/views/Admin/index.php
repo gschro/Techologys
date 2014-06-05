@@ -8,4 +8,4 @@
 </div>
              </div>
 
-             <?php include 'protected/views/layouts/Footer.php' ?>
+<?php include 'protected/views/layouts/Footer.php' ?>

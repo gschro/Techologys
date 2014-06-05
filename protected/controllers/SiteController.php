@@ -1,5 +1,5 @@
 <?php
-
+require 'protected/3rd Party/passwordLib/passwordLib.php';
 class SiteController extends Controller
 {
         public $message = "";
@@ -97,6 +97,7 @@ class SiteController extends Controller
  //            $this->render('Login',array("message"=>"Incorrect Email/Password combination"));            
  //        }
 	// }
+    //5.4.28 vs 5.5.9
 
     /**
      * Displays the login page
@@ -120,10 +121,17 @@ class SiteController extends Controller
         
     public function actionSignIn()
 	{
+        try{
         $email = $_POST['email'];
         $user = EmailAccount::model()->findByAttributes(array('EMAIL'=>$email));
-        if(!is_null($user)){
-            if(password_verify($_POST['password'],$user->HASHPASS)){
+
+        if(!is_null($user->EMAIL)){
+
+            $password = $_POST['password'];
+            //$test1 = password_verify($password,$user->HASHPASS);
+
+            if(password_verify($password,$user->HASHPASS)){
+
                 session_start();
                 $_SESSION['user'] = $user->ID;
                 if(isset($_POST['page'])){
@@ -132,7 +140,7 @@ class SiteController extends Controller
                 else{
                     $page = "index";
                 }
-                $this->render($page,array("data"=>$page, "message"=>"login successful"));                                    
+                $this->render($page,array("message"=>"login successful"));      //"data"=>$page,                               
             }
             else{
               $this->render('Login',array("message"=>"Incorrect Email/Password combination"));
@@ -141,6 +149,12 @@ class SiteController extends Controller
         else{
             $this->render('Login',array("message"=>"Incorrect Email/Password combination"));
         }
+        }
+        catch(Exception $e){
+                $message = "Could not create account ".$e->getMessage();
+                $transaction->rollBack(); 
+                $this->render('CreateAccount', array("message"=>$message));
+            }
 	}
 	/**
 	 * Logs out the current user and redirect to homepage.
@@ -177,6 +191,7 @@ class SiteController extends Controller
                     $newEmailAccount->FIRSTNAME = $_POST['firstName'];
                     $newEmailAccount->LASTNAME = $_POST['lastName'];
                     $newEmailAccount->HASHPASS = password_hash($_POST['password'],PASSWORD_DEFAULT);
+
                     //$newEmailAccount->COMPANY = $_POST['firstName'];                    
                     $newEmailAccount->USERID = $newUser->ID;
                     //$newEmailAccount->save();

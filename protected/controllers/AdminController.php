@@ -5,7 +5,7 @@ class AdminController extends Controller
         public $type = "";
         
         public function actionIndex(){
-            $this->render('Index');            
+            $this->render('index');            
         }
         
         public function actionQuestions(){
@@ -31,7 +31,7 @@ class AdminController extends Controller
            
          //   if(isset($_POST['question']) && isset($_POST["category"])){
             try{
-                 $message = "set";
+                $message = "set";
                 $Question = new Question();
                 $Question->QUESTIONCATEGORYID = $_POST['category'];
                 $Question->QUESTION = $_POST['question'];

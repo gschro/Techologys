@@ -54,10 +54,10 @@ return array(
 		*/
 		'db'=>array(
 			'connectionString' => 'mysql:host=localhost;dbname=techolo3_techologys',
-			'emulatePrepare' => true,
+		//	'emulatePrepare' => true,
 			'username' => 'techolo3_admin',
 			'password' => '}[N9OtL[7!^c',
-			'charset' => 'utf8',
+		//	'charset' => 'utf8',
 		),
 		
 		'errorHandler'=>array(
