@@ -3,7 +3,8 @@
  <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="language" content="en" />         
-    <title>TechChute</title>
+    <title>Techologys</title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/worldicon.png" />
     <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css">    
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>     
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
@@ -25,7 +26,7 @@
              <div class="container">                                 
                 <!-- .btn-navbar is used as the toggle for collapsed navbar content -->                 
                 <!-- Be sure to leave the brand out there if you want it shown -->
-                <a class="brand" href="index.php">TechChute</a>
+                <a class="brand" href="index.php">Techologys</a>
                   
                    <ul class="nav">
                        <li><a href="<?php echo Yii::app()->CreateUrl('Site/index')?>">Home</a></li>

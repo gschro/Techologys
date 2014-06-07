@@ -1,5 +1,5 @@
 <?php
-
+ini_set('max_execution_time', 300);
 class AdminController extends Controller
 {
         public $type = "";
@@ -204,5 +204,51 @@ class AdminController extends Controller
         echo CJSON::encode(array('message'=>$result));        
     }
 
-    
+    public function actionGetStocksByIndustry(){
+        $url = "http://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.industry%20where%20id%20in%20(select%20industry.id%20from%20yahoo.finance.sectors)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys";
+        $response = file_get_contents($url);
+       // echo $response;
+        $industries = json_decode($response, true);        
+        //$json = json_decode($response, true);
+        //$query = $json['query'];
+        //$industries = $query;
+      //  $test = $industries['query']['results']['industry'];
+     //   echo $test;
+        foreach($industries['query']['results']['industry'] as $industry){
+            $newIndustry = new Industry();
+            $newIndustry->ID = $industry['id'];
+            $newIndustry->Name = $industry['name'];
+         //   $curInd = Industry::model()->findByPK($newIndustry->ID);
+         //   if(is_null($curInd)){
+         //       if($newIndustry->save()){
+                    if(array_key_exists("company",$industry)){
+                    $companies = $industry['company'];            
+                    foreach($companies as $company){
+                        try{
+                        $newCompany = new Company();
+                        $newCompany->NAME = $company['name'];
+                        $newCompany->SYMBOL = $company['symbol'];
+                        $newCompany->INDUSTRYID = $newIndustry->ID;
+                        $curComp = Company::model()->findByAttributes(array("SYMBOL"=>$newCompany->SYMBOL));
+                        if(is_null($curComp)){                        
+                            if(!$newCompany->save()){
+                                $message = "Company ".$newCompany->NAME." could not be saved";                        
+                                echo $message;
+                            }
+                        }
+                        else{
+                            $message = $newCompany->NAME.' already exists';
+                            echo $message;
+                        }
+                    }catch(Exception $e){}
+            //        }
+           //     }
+            //    else{
+           //         $message = $newIndustry->Name." industry could not be saved";
+          //          echo $message;
+         //       }
+            }
+            }
+        }
+    }
 }

@@ -7,8 +7,8 @@
                  <div class="row">
                      <?php 
                      $listing = json_decode($jsonListing);
-                     echo "<input type='text' name='jsonListing' value='".$jsonListing."' />";
-                     echo "<input type='text' name='jsonDetails' value='".$jsonDetails."' />";
+                     echo "<input type='text' name='jsonListing' value='".$jsonListing."' hidden />";
+                     echo "<input type='text' name='jsonDetails' value='".$jsonDetails."' hidden />";
                      
                      $details = json_decode($jsonDetails);
                      echo "<h2>".$listing->NAME;

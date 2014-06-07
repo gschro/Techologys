@@ -134,6 +134,7 @@ class SiteController extends Controller
 
                 session_start();
                 $_SESSION['user'] = $user->ID;
+                echo 'session started';
                 if(isset($_POST['page'])){
                     $page = $_POST['page'];                    
                 }
@@ -287,6 +288,7 @@ class SiteController extends Controller
         public function actionPreviewTech(){
             $message = "";
             try{
+                session_start();
                // $message = "something";
                 $listing = new Listing();
                // $message = "start tech";
@@ -335,34 +337,7 @@ class SiteController extends Controller
         
         public function actionListTech(){
 //            $message = "";
-//            $list = new Listing();
-//            $list->USERID = 1;
-//            $list->SUBCATEGORYID = 3; 
-//            $list->NAME = "TEST NAME";
-//            $list->DESC = "TEST DESC";
-//            $list->PATENTSTATUS = "TEST PATENT";
-//            $list->LISTAGREEMENT = 1;
-//            $list->RIGHTS = 1;
-//            $list->RIGHTSDETAILS = "NONE";
-//            $list->save();
-//            
-//            if($list->save()){
-//                $message .= " LISTINGSAVED!!!! ";
-//            }
-//            else{
-//                $message .= " LISTINGHELP!!! ".CJSON::Encode($quest->getErrors());
-//            }            
-//            
-//            $quest = new QuestionValue();
-//            $quest->QUESTIONID = 10000007;
-//            $quest->LISTINGID = 33; 
-//            $quest->VALUE = 1;
-//            if($quest->save()){
-//                $message .= "SAVED!!!! ";
-//            }
-//            else{
-//                $message .= " HELP!!! ".CJSON::Encode($quest->getErrors());
-//            }
+
             $good = true;
             $jlisting = json_decode($_POST['jsonListing']);
             $details = json_decode($_POST['jsonDetails']);            
@@ -393,18 +368,18 @@ class SiteController extends Controller
 //echo "<br><br><br> ". CJSON::Encode($test);
                         
                         if($qval->save()){
-                            $message .= " qv saved ";
-                            $message .= " ". CJSON::Encode($qval->getErrors());
+                     //       $message .= " qv saved ";
+                      //      $message .= " ". CJSON::Encode($qval->getErrors());
                         }
                         else{
-                            $message .= " |%".$qval->QUESTIONID."%| ";
+                        //    $message .= " |%".$qval->QUESTIONID."%| ";
                             //.CJSON::Encode($qval->getErrors())." "
                             $good = false;                            
                         }
                         unset($qval);
                     }
                     if($good){
-                        $message .= CJSON::Encode($listing->getErrors())." GOOD!";
+                   //     $message .= CJSON::Encode($listing->getErrors())." GOOD!";
                         $this->render('TechListed', array("message"=>$message));               
                         $transaction->commit();
                         }
@@ -419,7 +394,7 @@ class SiteController extends Controller
                     }
                 }
                 else{
-                    $message = "hyelp ".CJSON::Encode($listing->getErrors());
+                 //   $message = "hyelp ".CJSON::Encode($listing->getErrors());
 
                     $message .= " listing wouldn't save ";
                     $jsonListing = CJSON::Encode($listing);

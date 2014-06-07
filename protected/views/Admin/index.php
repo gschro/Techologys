@@ -3,7 +3,12 @@
 
 <div class ="container">
     <div class="row">
-        <a href="<?php echo Yii::app()->createUrl('Admin/Questions')?>">Questions</a>        
+    	<p>
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/Questions')?>">Questions</a>        
+    	</p>
+        <p>
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksByIndustry')?>">Get Stocks By Industry</a>        
+    	</p>
     </div>
 </div>
              </div>
