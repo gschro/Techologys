@@ -99,10 +99,16 @@ class SiteController extends Controller
 	// }
     //5.4.28 vs 5.5.9
 
-    public function signedIn($page){
+    public function signedIn($page, $data = null){
         session_start();
         if(array_key_exists('user', $_SESSION)){
-            $this->render($page,array("message"=>""));  
+            $dataArray = array();
+            if(isset($data)){
+                foreach($data as $key=>$value){
+                    $dataArray[$key] = $value;
+                }
+            }
+            $this->render($page,$dataArray);  
         }
         else{
             $url = Yii::app()->createUrl('site/LoginView');      
@@ -280,7 +286,8 @@ class SiteController extends Controller
                 $html .= "</ul>";
             }
         }
-		$this->render('TechList', array("data"=>$html));
+        $this->signedIn('TechList',array("data"=>$html));
+		//$this->render('TechList', array("data"=>$html));
 	}
         
         public function actionTechView(){
