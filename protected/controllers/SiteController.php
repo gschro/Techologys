@@ -99,6 +99,17 @@ class SiteController extends Controller
 	// }
     //5.4.28 vs 5.5.9
 
+    public function signedIn($page){
+        session_start();
+        if(array_key_exists('user', $_SESSION)){
+            $this->render($page,array("message"=>""));  
+        }
+        else{
+            $url = Yii::app()->createUrl('site/LoginView');      
+            $this->redirect($url, array("message"=>"Please Login to Continue"));
+        }       
+    }
+
     /**
      * Displays the login page
      */
@@ -106,25 +117,29 @@ class SiteController extends Controller
         $this->render('Login',array("message"=>""));        
     }
         
-        public function actionMission()
-        {
-            $this->render('Mission');
-        }
+    public function actionMission()
+    {
+        $this->render('Mission');
+    }
 
-        public function actionUniversity(){
-            $this->render('University');          
-        }
+    public function actionUniversity(){
+        $this->signedIn('University');
+        //$this->render('University');          
+    }
         
     public function actionInvestor(){
-        $this->render('Investor');
+        $this->signedIn('Investor');        
+        //$this->render('Investor');
     }
         
     public function actionManageAccount(){
-        $this->render('ManageAccount');
+        $this->signedIn('ManageAccount');        
+        //$this->render('ManageAccount');
     }
 
     public function actionEditTech(){
-        $this->render('EditTech');
+        $this->signedIn('EditTech');        
+      //  $this->render('EditTech');
     }    
 
     public function actionSignIn()

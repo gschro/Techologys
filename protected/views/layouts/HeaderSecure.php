@@ -12,13 +12,7 @@
  <div class="TEST"></div>
  <?php
     //retrieve session data
- if(!isset($_SESSION)){
-  session_start();
- }
-    if(!isset($_SESSION['user'])){
-        $url = Yii::app()->createUrl('site/LoginView');      
-        $this->redirect($url);
-    }
+
     $base = '';
     //$base = 'https://secure.BlueHost.com/~techolo3/';
 ?>
@@ -42,13 +36,14 @@
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
                         <ul class="dropdown-menu pull-right">
                         <!--<li><a tabindex="-1" href="#">Settings</a></li>-->
-                        <?php           
-                            if(isset($_SESSION['user'])){                         
+                        <?php       
+                        if(!isset($_SESSION)){session_start();}
+                            if(array_key_exists('user', $_SESSION)){                         
                                 echo"<li><a href='".Yii::app()->createUrl('Site/Logout')."' class='navbar-btn'>Log Out</a></li>";            
                                 $id = (string)$_SESSION['user'];
                                 $id = strval($id);
                                 $userModel = User::model()->findByPk($id);
-                                if(isset($userModel)){
+                                if(isset($userModel)){                            
                                     if($userModel->ADMIN){
                                         echo "<li><a href='".Yii::app()->createUrl('Admin/index')."' class='navbar-btn'>Admin</a></li>";
                                     }
