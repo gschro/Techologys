@@ -22,8 +22,7 @@ function listTech(){
           success: function(data){
               var dat = JSON.parse(data);
               $("#list").attr("value",dat.title);
-              alert(dat.result);
-              //alert(dat.message);
+              //alert(dat.result);
           }
         });                
     })
