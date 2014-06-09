@@ -14,6 +14,7 @@
             <div class="row">
                 Messages<br>
                 News<br>
+                <a href="<?php echo Yii::app()->createUrl('site/ManageAccount') ?>" class="btn btn-primary">Manage Account</a>                
             </div>
             <div class="row">
                 <a href="<?php echo Yii::app()->createUrl('site/TechList') ?>" class="btn btn-primary">View All Technologies</a>

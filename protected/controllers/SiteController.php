@@ -119,6 +119,10 @@ class SiteController extends Controller
         $this->render('Investor');
     }
         
+    public function actionManageAccount(){
+        $this->render('ManageAccount');
+    }
+    
     public function actionSignIn()
 	{
         try{
@@ -422,4 +426,56 @@ class SiteController extends Controller
                $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));
             }
         }
+
+    public function actionDeleteTech(){
+        session_start();
+        $techId = $_SESSION['techViewId'];
+        $result = "";
+        $questionValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$techId));
+        foreach($questionValues as $val){
+            $val->delete();
+        }
+        $listing = Listing::model()->findByPK($techId);
+        if($listing->delete()){
+            $result = "Listing successfully deleted";
+            $this->render('University', array("message"=>$result));                    
+        }else{
+            $result = "Listing could not be deleted";
+            $this->render('TechView', array("message"=>$result));                    
+        }
+        //echo CJSON::encode(array('message'=>$result));
+    }
+
+    public function actionUnlistTech(){
+        session_start();
+        $techId = $_SESSION['techViewId'];
+        $result = "";
+        $listing = Listing::model()->findByPk($techId);
+        $listing->VISIBLE = 0;
+        if($listing->save()){
+            $result = "Tech successfully unlisted";
+        }
+        else{
+            $result = "Tech could not be unlisted";
+        }
+        echo CJSON::encode(array('result'=>$result,'title'=>'List'));                
+   //     $this->render('TechView', array("message"=>$result));
+    }
+
+    public function actionShowTech(){
+        session_start();
+        $techId = $_SESSION['techViewId'];
+        $result = "";
+        $listing = Listing::model()->findByPk($techId);
+        $listing->VISIBLE = 1;
+        if($listing->save()){
+            $result = "Tech successfully listed";
+        }
+        else{
+            $result = "Tech could not be listed";
+        }
+        echo CJSON::encode(array('result'=>$result,'title'=>'Unlist'));        
+    //    $this->render('TechView', array("message"=>$result));        
+    }
+
 }

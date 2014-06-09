@@ -13,6 +13,8 @@
  * @property integer $LISTAGREEMENT
  * @property integer $RIGHTS
  * @property string $RIGHTSDETAILS
+ * @property integer $TOTALSCORE
+ * @property integer $VISIBLE
  */
 class Listing extends CActiveRecord
 {
@@ -32,13 +34,13 @@ class Listing extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('USERID, SUBCATEGORYID, NAME, DESC, PATENTSTATUS, LISTAGREEMENT, RIGHTS, RIGHTSDETAILS', 'required'),
-			array('USERID, SUBCATEGORYID, LISTAGREEMENT, RIGHTS', 'numerical', 'integerOnly'=>true),
+			array('USERID, SUBCATEGORYID, NAME, DESC, PATENTSTATUS, LISTAGREEMENT, RIGHTS, RIGHTSDETAILS, TOTALSCORE', 'required'),
+			array('USERID, SUBCATEGORYID, LISTAGREEMENT, RIGHTS, TOTALSCORE, VISIBLE', 'numerical', 'integerOnly'=>true),
 			array('NAME', 'length', 'max'=>250),
 			array('PATENTSTATUS', 'length', 'max'=>100),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, USERID, SUBCATEGORYID, NAME, DESC, PATENTSTATUS, LISTAGREEMENT, RIGHTS, RIGHTSDETAILS', 'safe', 'on'=>'search'),
+			array('ID, USERID, SUBCATEGORYID, NAME, DESC, PATENTSTATUS, LISTAGREEMENT, RIGHTS, RIGHTSDETAILS, TOTALSCORE, VISIBLE', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -71,6 +73,8 @@ class Listing extends CActiveRecord
 			'LISTAGREEMENT' => 'Listagreement',
 			'RIGHTS' => 'Rights',
 			'RIGHTSDETAILS' => 'Rightsdetails',
+			'TOTALSCORE' => 'Totalscore',
+			'VISIBLE' => 'Visible',
 		);
 	}
 
@@ -109,6 +113,10 @@ class Listing extends CActiveRecord
 		$criteria->compare('RIGHTS',$this->RIGHTS);
 
 		$criteria->compare('RIGHTSDETAILS',$this->RIGHTSDETAILS,true);
+
+		$criteria->compare('TOTALSCORE',$this->TOTALSCORE);
+
+		$criteria->compare('VISIBLE',$this->VISIBLE);
 
 		return new CActiveDataProvider('Listing', array(
 			'criteria'=>$criteria,

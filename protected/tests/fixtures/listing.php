@@ -11,6 +11,8 @@ return array(
 		'LISTAGREEMENT' => '',
 		'RIGHTS' => '',
 		'RIGHTSDETAILS' => '',
+		'TOTALSCORE' => '',
+		'VISIBLE' => '',
 	),
 	'sample2'=>array(
 		'USERID' => '',
@@ -21,6 +23,8 @@ return array(
 		'LISTAGREEMENT' => '',
 		'RIGHTS' => '',
 		'RIGHTSDETAILS' => '',
+		'TOTALSCORE' => '',
+		'VISIBLE' => '',
 	),
 	*/
 );

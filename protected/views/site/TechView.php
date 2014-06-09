@@ -1,4 +1,5 @@
 <?php include 'protected/views/layouts/HeaderSecure.php'?>
+<script><?php include 'js/TechView.js'?></script>
      
      <div class ="container">
          <div class="row">
@@ -12,6 +13,8 @@
                      </p>
                      <p class="span2 offset7">
                          <?php 
+                        // session_start();
+                         $_SESSION['techViewId'] = $tech->ID;
                          $status = $tech->PATENTSTATUS;
                          $label = "";
                          if($status === "Patent"){
@@ -44,12 +47,27 @@
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: 56 of 100</h3>
+                         <h3>TechChute Score: <?php echo $tech->TOTALSCORE ?> of 100</h3>
                      </span>
                  </div>
                  <div class="row">
-                     <br>
-                     <a href="" class="btn btn-large span3 offset2">License This Tech!</a>
+                     <p>
+                         <a href="<?php echo Yii::app()->createUrl('Site/University')?>" class="btn btn-large" >Back</a>                        
+                         <a href="<?php echo Yii::app()->createUrl('Site/EditTech')?>" class="btn btn-large">Edit</a>
+                         <a href="<?php echo Yii::app()->createUrl('Site/DeleteTech')?>" class="btn btn-large" >Delete</a>                         
+                     </p>
+                     <p>
+                         <?php 
+                            $visible = "";
+                            if($tech->VISIBLE == 1){
+                                $visible = "Unlist";                            
+                            }
+                            else{
+                                $visible = "List";
+                            }
+                         ?>                        
+                         <input id="list" class="btn btn-large" value="<?php echo $visible; ?>" />                         
+                    </p>
                  </div>
              </div>
              <div class="span2">

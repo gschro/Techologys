@@ -1,29 +1,18 @@
 <?php include 'protected/views/layouts/HeaderSecure.php'?>
      
      <div class ="container">
-        <form method="post" action="<?php echo Yii::app()->createUrl('Site/ListTech')?>">
-         <div class="row">             
+         <div class="row">
              <div class="span10">
                  <div class="row">
-                     <?php 
-                     $listing = json_decode($jsonListing);
-                   //  session_start();
-                     $_SESSION['jsonListing'] = $jsonListing;
-                     $_SESSION['jsonDetails'] = $jsonDetails;
-                  //   echo "<input type='text' type='hidden' name='jsonListing' value='".$jsonListing."' />";
-                 //    echo "<input type='text' type='hidden' name='jsonDetails' value='".$jsonDetails."' />";
-                     
-                     $details = json_decode($jsonDetails);
-                     echo "<h2>".$listing->NAME;
-                     //echo $tech->NAME ?></h2>                     
+                     <h2><?php echo $tech->NAME ?></h2>                     
                  </div>
                  <div class="row">                     
                      <p class="span8">
-                         <?php echo $listing->DESC ?>
+                         <?php echo $tech->DESC ?>
                      </p>
                      <p class="span2 offset7">
                          <?php 
-                         $status = $listing->PATENTSTATUS;
+                         $status = $tech->PATENTSTATUS;
                          $label = "";
                          if($status === "Patent"){
                              $label = "label-success";
@@ -55,12 +44,13 @@
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: <?php //echo $listing->TOTALSCORE; ?>56 of 100</h3>
+                         <h3>TechChute Score: 56 of 100</h3>
                      </span>
                  </div>
                  <div class="row">
                      <br>
-                     <input type="submit" class="btn btn-large span3 offset2" value="List my Tech!"/>
+                     <a href="" class="btn btn-large span3 offset2">Save Changes</a>
+                     <a href="" class="btn btn-large span3 offset2">Back</a>                     
                  </div>
              </div>
              <div class="span2">
@@ -69,7 +59,6 @@
              
              </div>
          </div>
-        </form>
      </div>
 <br><br>
 <?php include 'protected/views/layouts/Footer.php'?>
