@@ -313,13 +313,20 @@ class SiteController extends Controller
                 $questions = Question::model()->findAll();
                 $details = array();
               //  $message = "this far";
+                $score = 0;
                 foreach($questions as $question){
                     if(isset($question)){
-                    $details[] = $this->createQuestionValue($listing->ID,$_POST[$question->NAME],$question->NAME);}
+                        $qv = $this->createQuestionValue($listing->ID,$_POST[$question->NAME],$question->NAME);
+                //    $details[] = $this->createQuestionValue($listing->ID,$_POST[$question->NAME],$question->NAME);
+                        $details[] = $qv;
+                    $score += $qv->VALUE;
+
+                }
                 //    $message ="further";
                 }
+                $score = $score/count($details);
                 $jsonDetails = CJSON::Encode($details);
-                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing));
+                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score));
             }
             catch(Exception $e){
                 //$this->render('AddTech');            
@@ -337,15 +344,18 @@ class SiteController extends Controller
         
         public function actionListTech(){
 //            $message = "";
+                session_start();
 
             $good = true;
-            $jlisting = json_decode($_POST['jsonListing']);
-            $details = json_decode($_POST['jsonDetails']);            
+            //$jlisting = json_decode($_POST['jsonListing']);
+            //$details = json_decode($_POST['jsonDetails']);            
+            $jlisting = json_decode($_SESSION['jsonListing']);
+            $details = json_decode($_SESSION['jsonDetails']);
             $transaction = Yii::app()->db->beginTransaction();
             $message = "";
             try{
                 $listing = new Listing();
-                $listing->USERID = 1;//Yii::app()->request->cookies['user']->value;
+                $listing->USERID = $_SESSION['user'];
                 $listing->NAME = $jlisting->NAME;
                 $listing->DESC = $jlisting->DESC;
                 $listing->RIGHTS = $jlisting->RIGHTS;

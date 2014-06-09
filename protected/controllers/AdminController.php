@@ -251,4 +251,23 @@ class AdminController extends Controller
             }
         }
     }
+
+    public function getStockInfo(){
+        //YHOO%22%2C%22AAPL%22%2C%22GOOG%22%2C%22MSFT%22%2C%22HPQ%22
+        $stocks = Company::model()->findAll();
+        $stocksSymbols = "%22";        
+        $x = 0;
+        foreach($stocks as $stock){
+            if($x > 0){
+            $stocksSymbols .= "%22%2C%22".$stock->SYMBOL;            
+            }
+            else{
+                $stocksSymbols .= $stock->SYMBOL;
+            }
+        }
+        $stocksSymbols .= "%22";
+        $url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(".$stocksSymbols.")&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
+        $response = file_get_contents($url);
+        $stockInfo = json_decode($response, true);        
+    }
 }

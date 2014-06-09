@@ -7,8 +7,11 @@
                  <div class="row">
                      <?php 
                      $listing = json_decode($jsonListing);
-                     echo "<input type='text' name='jsonListing' value='".$jsonListing."' hidden />";
-                     echo "<input type='text' name='jsonDetails' value='".$jsonDetails."' hidden />";
+                   //  session_start();
+                     $_SESSION['jsonListing'] = $jsonListing;
+                     $_SESSION['jsonDetails'] = $jsonDetails;
+                  //   echo "<input type='text' type='hidden' name='jsonListing' value='".$jsonListing."' />";
+                 //    echo "<input type='text' type='hidden' name='jsonDetails' value='".$jsonDetails."' />";
                      
                      $details = json_decode($jsonDetails);
                      echo "<h2>".$listing->NAME;

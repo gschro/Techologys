@@ -9,6 +9,9 @@
         <p>
         	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksByIndustry')?>">Get Stocks By Industry</a>        
     	</p>
+        <p>
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksInfo')?>">Get Current Stock Information</a>        
+    	</p>    	
     </div>
 </div>
              </div>
