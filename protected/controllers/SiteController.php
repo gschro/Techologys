@@ -122,7 +122,11 @@ class SiteController extends Controller
     public function actionManageAccount(){
         $this->render('ManageAccount');
     }
-    
+
+    public function actionEditTech(){
+        $this->render('EditTech');
+    }    
+
     public function actionSignIn()
 	{
         try{
@@ -247,23 +251,33 @@ class SiteController extends Controller
         
 	public function actionTechList()
 	{
-                $html = '<ul class="media-list">';
-                $model=Listing::model()->findAll();
-                foreach($model as $val){
+        $html = '<ul class="media-list">';
+        $model=Listing::model()->findAll();
+        foreach($model as $val){
+            if($val->VISIBLE == 1){
                  $html .= '
                  <li class="media">'.
                     '<a class="pull-left" href="'.Yii::app()->createUrl('Site/TechView',array('name'=>$val->ID)).'">more</a>'.
                     '<div class="media-body">'.
                         '<h4 class="media-heading">'.$val->NAME.'</h4>'.
                     '</div>'.
-                 '</li>';
-                }
+                 '</li>';                
                 $html .= "</ul>";
+            }
+        }
 		$this->render('TechList', array("data"=>$html));
 	}
         
         public function actionTechView(){
-            $pk = $_GET['name'];
+            $pk = "";            
+            if(array_key_exists('name', $_GET)){
+                $pk = $_GET['name'];
+            }
+            else{
+                session_start();
+                $pk = $_SESSION['techViewId'];                    
+            }
+           
             $model = null;
             if(is_null($pk)){
                 $this->render('TechList', array("message"=>"Error loading page"));

@@ -51,6 +51,7 @@
                      </span>
                  </div>
                  <div class="row">
+                    <?php if($tech->USERID === $_SESSION['user']){?>
                      <p>
                          <a href="<?php echo Yii::app()->createUrl('Site/University')?>" class="btn btn-large" >Back</a>                        
                          <a href="<?php echo Yii::app()->createUrl('Site/EditTech')?>" class="btn btn-large">Edit</a>
@@ -68,6 +69,11 @@
                          ?>                        
                          <input id="list" class="btn btn-large" value="<?php echo $visible; ?>" />                         
                     </p>
+                    <?php } 
+                    else{
+                         ?> <input id="license" class="btn btn-large" value="License this Tech!" /> <?php                                                 
+                    }
+                    ?>
                  </div>
              </div>
              <div class="span2">

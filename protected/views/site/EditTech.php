@@ -4,7 +4,9 @@
          <div class="row">
              <div class="span10">
                  <div class="row">
-                     <h2><?php echo $tech->NAME ?></h2>                     
+                     <h2><?php 
+                     $tech = Listing::model()->findByPK($_SESSION['techViewId']);
+                     echo $tech->NAME ?></h2>                     
                  </div>
                  <div class="row">                     
                      <p class="span8">
@@ -50,7 +52,7 @@
                  <div class="row">
                      <br>
                      <a href="" class="btn btn-large span3 offset2">Save Changes</a>
-                     <a href="" class="btn btn-large span3 offset2">Back</a>                     
+                     <a href="<?php echo Yii::app()->createUrl('Site/TechView')?>" class="btn btn-large span3 offset2">Cancel</a>                     
                  </div>
              </div>
              <div class="span2">
