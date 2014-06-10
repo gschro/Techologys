@@ -1,6 +1,8 @@
 $(document).ready(function () {
     
     hideLists();
+    getSubCatsForStocks();
+    //getStocks();
     
     $("#qcat").click(function(){
        getQuestionCategories(); 
@@ -68,6 +70,28 @@ $(document).ready(function () {
         }
     });
     
+    $("#maincatstock").change(function(){
+        getSubCatsForStocks();
+    });
+
+    $("#subcatstocks").click(function(){
+        getStocks();
+      //  getSubCatStocks();
+    });
+
+    $("#subcatstock").click(function(){
+        //getStocks();
+        getSubCatStocks();
+    });
+
+    $("#removeSCatStock").click(function(){
+        removeSubCatStock();
+    });
+
+    $("#addSCatStock").click(function(){
+        addSubCatStock();
+    });
+
 });                  
 
 function hideLists(){
@@ -75,16 +99,91 @@ function hideLists(){
     $("#removeQuestionCategory").hide();
     $("#removeSecurityQuestion").hide();
     $("#removeMainCat").hide();
-    $("#removeSubCat").hide();    
+    $("#removeSubCat").hide(); 
+    $("#removeSubCatStock").hide();
+}
+
+function addSubCatStock(){
+    var stock = $("#stock").val();
+    var scId = $("#subcatstock").val();
+    $.ajax({
+      type: "POST",
+      url: "<?php echo Yii::app()->createUrl('Admin/AddSubCatStock') ?>",
+      data: {"stock":stock, "scId":scId},
+      success: function(data){
+          var dat = JSON.parse(data);
+          getSubCatStocks();    
+          $("#stock").val('');
+          alert(dat.message);
+      }
+    }); 
+}
+
+function removeSubCatStock(){
+    var catId = $("#listofstocks").val();
+    $.ajax({
+      type: "POST",
+      url: "<?php echo Yii::app()->createUrl('Admin/RemoveSubCatStock') ?>",
+      data: {"catId":catId},
+      success: function(data){
+          var dat = JSON.parse(data);
+          getSubCatStocks();             
+      }
+    });  
+}
+
+function getSubCatsForStocks(){
+    var mcId = $("#maincatstock").val();    
+    $.ajax({
+        type: "POST",
+        url: "<?php echo Yii::app()->createUrl('Admin/GetSubCategories')?>",
+        data: {"mcId":mcId},
+        success: function(data){
+            var dat = JSON.parse(data);
+            $("#subcatstock").empty();
+            for(var i = 0; i < dat.categories.length; i++){
+                $("#subcatstock").append($("<option></option>")
+                .attr("value",dat.categories[i].ID).text(dat.categories[i].CATEGORY));
+            }
+        }
+    }); 
+}
+
+function getStocks(){
+    toggleBtn("#subcatstocks");
+    $("#removeSubCatStock").toggle();
+    var show = $("#removeSubCatStock").is(":visible");  
+    if(show){            
+       getSubCatStocks();         
+    }
+}
+
+function getSubCatStocks(){
+  //  var mcId = $("#maincatstock").val(); 
+    var scId = $("#subcatstock").val();  
+    //alert(scId+ " scid") ;
+    $.ajax({
+        type: "POST",
+        url: "<?php echo Yii::app()->createUrl('Admin/GetSubCatStocks')?>",
+        data: {"subcatstock":scId},
+        success: function(data){
+            var dat = JSON.parse(data);            
+            $("#listofstocks").empty();
+            for(var i = 0; i < dat.stocks.length; i++){
+                $("#listofstocks").append($("<option></option>")
+                .attr("value",dat.stocks[i].ID).text(dat.stocks[i].SYMBOL));
+            }
+        }
+    });  
 }
 
 function getQuestionCategories(){
-        toggleBtn("#qcat");
-        $("#removeQuestionCategory").toggle();
-        var show = $("#removeQuestionCategory").is(":visible");  
-        if(show){            
-            getListingCategories();         
-        }
+    toggleBtn("#qcat");
+    $("#removeQuestionCategory").toggle();
+    var show = $("#removeQuestionCategory").is(":visible");  
+    if(show){            
+        getListingCategories();         
+    }
 }
 
 function addQuestionCategory(){

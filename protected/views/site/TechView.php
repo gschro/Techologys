@@ -77,8 +77,17 @@
                  </div>
              </div>
              <div class="span2">
-                 Stocks
-<iframe src="http://edulifeline.com/includes/stocks_widget/?presets=pep,su,ntl" height="322px" width="250px" frameborder="0" scrolling="0"></iframe>                  
+                 Related Stocks<br><br>
+                 <?php 
+                    //load stocks here
+                     $scatid = $tech->SUBCATEGORYID;
+                     $stocks = Stocks::model()->findAllByAttributes(array("SUBCATEGORYID"=>$scatid));
+                     foreach($stocks as $stock){
+                        echo $stock->SYMBOL . " $" . $stock->PRICE . "<br>";
+                     }
+
+                 ?>
+<!--<iframe src="http://edulifeline.com/includes/stocks_widget/?presets=pep,su,ntl" height="322px" width="250px" frameborder="0" scrolling="0"></iframe>                  -->
              
              </div>
          </div>

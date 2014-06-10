@@ -95,6 +95,33 @@
                                 <div id="removeSCat" class="btn btn-danger">Remove</div>
                         </div>                                                            
                  </form>
+
+                <legend>Sub Category Stocks</legend>
+                <form class="well" id="stockform" name="stockform">
+                    <h4>Add a Stock to a Sub Category</h4>
+                    <label>Main Category</label>
+                    <select name="maincatstock" id="maincatstock" class="span3 offset5">
+                        <?php 
+                            $cats = MainCategory::model()->findAll();                            
+                            foreach($cats as $cat){
+                                echo "<option value='".$cat->ID."'>".$cat->CATEGORY."</option>";
+                            }
+                        ?>
+                    </select><br>
+                    <label>Sub Category</label>                    
+                    <select name="subcatstock" id="subcatstock" class="span3 offset5">
+                    </select><br> 
+                    <label for="stock">Stock Symbol</label>                                        
+                    <input type="text" id="stock" class="span3" name="stock" placeholder="Stock Symbol"><br>                    
+                    <input type="button" id="addSCatStock" class="btn btn-success" value="Add"> 
+                    <input type="button" id="subcatstocks" class="btn btn-default pull-right" value="View All"/>                                                       
+                       <div id="removeSubCatStock"><br>
+                            <label>Stocks</label>
+                                <select  multiple="multiple" id="listofstocks" class="span5" hidden>                        
+                                </select>                    
+                                <div id="removeSCatStock" class="btn btn-danger">Remove</div>
+                        </div>                                           
+                </form>
              </div>
          </div>
      </div>

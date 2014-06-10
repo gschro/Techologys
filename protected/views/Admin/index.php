@@ -4,13 +4,13 @@
 <div class ="container">
     <div class="row">
     	<p>
-        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/Questions')?>">Questions</a>        
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/Questions')?>">Questions and Categories</a>        
     	</p>
-        <p>
-        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksByIndustry')?>">Get Stocks By Industry</a>        
+   <!-- <p>
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksByIndustry')?>">Get Stocks By Industry</a>       
     	</p>
-        <p>
-        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStocksInfo')?>">Get Current Stock Information</a>        
+        <p>  -->
+        	<a class="btn" href="<?php echo Yii::app()->createUrl('Admin/GetStockInfo')?>">Get Current Stock Information</a>        
     	</p>    	
     </div>
 </div>

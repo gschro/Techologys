@@ -83,7 +83,7 @@ class AdminController extends Controller
                else{
 //print_r($model->getErrors());
       //exit();
-                    $message = "Failed to create the " . $name. " ";
+                    $message = "Failed to create the " . $name. " "; //.CJSON::encode($model->getErrors())
                     $this->type = "alert alert-error";
                }
            return $message;
@@ -189,6 +189,10 @@ class AdminController extends Controller
     public function actionRemoveSubCategory(){
         $result = "";
         $sc = SubCategory::model()->findByPK($_POST['sc']);
+        $stocks = Stocks::model()->findAllByAttributes(array("SUBCATEGORYID"=>$sc->ID));
+        foreach($stocks as $stock){
+            $stock->delete();
+        }
         if($sc->delete()){
             $result = "Success";
         }
@@ -202,6 +206,45 @@ class AdminController extends Controller
             $result = "Success";
         }
         echo CJSON::encode(array('message'=>$result));        
+    }
+
+    public function actionGetSubCatStocks(){
+       // $id = $_POST['mcId'];
+        $scId = $_POST['subcatstock'];
+       // $sId = 1;
+        $stocks = Stocks::model()->findAllByAttributes(array("SUBCATEGORYID"=>$scId));
+        //$categories = SubCategory::model()->findAllByAttributes(array("MAINCATEGORYID"=>$id));
+        if(!isset($stocks)){
+            $stocks = "no good";            
+        }
+        //$stocks=[["ID"=>1,"CATEGORY"=>$sId],["ID"=>2,"CATEGORY"=>"TEST"]];
+        echo CJSON::encode(array('stocks'=>$stocks));        
+    }
+
+    public function actionAddSubCatStock(){
+            $message = "Please enter a stock symbol";
+            try{            
+                $stock = new Stocks();
+                $stock->SYMBOL = $_POST['stock'];
+                $stock->SUBCATEGORYID = $_POST['scId'];
+                $stock->LASTUPDATED = "0000-00-00";
+                $stock->PRICE = 0;
+                $stock->NAME = $_POST['stock'];
+                $message = $this->saveModel($stock, "Stock");            
+            }
+            catch(Exception $e){
+                $message = "Failed to create the stock1";
+            }
+            echo CJSON::encode(array("message"=>$message));            
+    }
+
+    public function actionRemoveSubCatStock(){
+        $result = "";
+        $stock = Stocks::model()->findByPK($_POST['catId']);
+        if($stock->delete()){
+            $result = "Success";
+        }
+        echo CJSON::encode(array('message'=>$result));                
     }
 
     public function actionGetStocksByIndustry(){
@@ -254,7 +297,7 @@ class AdminController extends Controller
 
     public function getStockInfo(){
         //YHOO%22%2C%22AAPL%22%2C%22GOOG%22%2C%22MSFT%22%2C%22HPQ%22
-        $stocks = Company::model()->findAll();
+        $stocks = Stocks::model()->findAll();
         $stocksSymbols = "%22";        
         $x = 0;
         foreach($stocks as $stock){
@@ -263,11 +306,13 @@ class AdminController extends Controller
             }
             else{
                 $stocksSymbols .= $stock->SYMBOL;
+                $x++;                
             }
         }
         $stocksSymbols .= "%22";
         $url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(".$stocksSymbols.")&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
         $response = file_get_contents($url);
-        $stockInfo = json_decode($response, true);        
+        $stockInfo = json_decode($response, true);
+        //save stock info here       
     }
 }
