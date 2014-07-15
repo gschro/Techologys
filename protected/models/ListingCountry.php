@@ -1,25 +1,20 @@
 <?php
 
 /**
- * This is the model class for table "stocks".
+ * This is the model class for table "listingcountry".
  *
- * The followings are the available columns in table 'stocks':
- * @property integer $ID
- * @property integer $SUBCATEGORYID
- * @property string $NAME
- * @property string $SYMBOL
- * @property double $PRICE
- * @property string $LASTUPDATED
- * @property string $CHANGE
+ * The followings are the available columns in table 'listingcountry':
+ * @property integer $COUNTRYID
+ * @property integer $LISTINGID
  */
-class Stocks extends CActiveRecord
+class ListingCountry extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'stocks';
+		return 'listingcountry';
 	}
 
 	/**
@@ -30,15 +25,11 @@ class Stocks extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('SUBCATEGORYID, NAME, SYMBOL, PRICE, LASTUPDATED', 'required'),
-			array('SUBCATEGORYID', 'numerical', 'integerOnly'=>true),
-			array('PRICE', 'numerical'),
-			array('NAME', 'length', 'max'=>255),
-			array('SYMBOL', 'length', 'max'=>50),
-			array('CHANGE', 'length', 'max'=>55),
+			array('COUNTRYID, LISTINGID', 'required'),
+			array('COUNTRYID, LISTINGID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, SUBCATEGORYID, NAME, SYMBOL, PRICE, LASTUPDATED, CHANGE', 'safe', 'on'=>'search'),
+			array('COUNTRYID, LISTINGID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -50,7 +41,6 @@ class Stocks extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'sUBCATEGORY' => array(self::BELONGS_TO, 'Subcategory', 'SUBCATEGORYID'),
 		);
 	}
 
@@ -60,13 +50,8 @@ class Stocks extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'ID' => 'Id',
-			'SUBCATEGORYID' => 'Subcategoryid',
-			'NAME' => 'Name',
-			'SYMBOL' => 'Symbol',
-			'PRICE' => 'Price',
-			'LASTUPDATED' => 'Lastupdated',
-			'CHANGE' => 'Change',
+			'COUNTRYID' => 'Countryid',
+			'LISTINGID' => 'Listingid',
 		);
 	}
 
@@ -88,28 +73,18 @@ class Stocks extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('ID',$this->ID);
+		$criteria->compare('COUNTRYID',$this->COUNTRYID);
 
-		$criteria->compare('SUBCATEGORYID',$this->SUBCATEGORYID);
+		$criteria->compare('LISTINGID',$this->LISTINGID);
 
-		$criteria->compare('NAME',$this->NAME,true);
-
-		$criteria->compare('SYMBOL',$this->SYMBOL,true);
-
-		$criteria->compare('PRICE',$this->PRICE);
-
-		$criteria->compare('LASTUPDATED',$this->LASTUPDATED,true);
-
-		$criteria->compare('CHANGE',$this->CHANGE,true);
-
-		return new CActiveDataProvider('Stocks', array(
+		return new CActiveDataProvider('ListingCountry', array(
 			'criteria'=>$criteria,
 		));
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return Stocks the static model class
+	 * @return ListingCountry the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{

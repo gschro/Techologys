@@ -36,7 +36,7 @@ class AdminController extends Controller
                 $Question->QUESTIONCATEGORYID = $_POST['category'];
                 $Question->QUESTION = $_POST['question'];
                 //find all for each category and then increment name                                    
-                $questions = Question::model()->findByAttributes(array("QUESTIONCATEGORYID"=>$Question->QUESTIONCATEGORYID));
+                $questions = Question::model()->findAllByAttributes(array("QUESTIONCATEGORYID"=>$Question->QUESTIONCATEGORYID));
                 $qNum = count($questions);
                 $cat = QuestionCategory::model()->findByPK($Question->QUESTIONCATEGORYID);
                 $name = str_replace(" ","",$cat->CATEGORY);
@@ -89,8 +89,11 @@ class AdminController extends Controller
            return $message;
        }
        
-    public function actionGetListingQuestions(){                        
-        $questions = Question::model()->findAll();
+    public function actionGetListingQuestions(){    
+       
+      // $category = "test";
+        $questions = Question::model()->findAllByAttributes(array("QUESTIONCATEGORYID"=>$_POST['category']));
+      // $questions = Question::model()->findAll();
         echo CJSON::encode(array('questions'=>$questions));            
     }
     
@@ -269,7 +272,7 @@ class AdminController extends Controller
                     foreach($companies as $company){
                         try{
                         $newCompany = new Company();
-                        $newCompany->NAME = $company['name'];
+                      //  $newCompany->NAME = $company['name'];
                         $newCompany->SYMBOL = $company['symbol'];
                         $newCompany->INDUSTRYID = $newIndustry->ID;
                         $curComp = Company::model()->findByAttributes(array("SYMBOL"=>$newCompany->SYMBOL));
@@ -295,7 +298,7 @@ class AdminController extends Controller
         }
     }
 
-    public function getStockInfo(){
+    public function actionGetStockInfo(){
         //YHOO%22%2C%22AAPL%22%2C%22GOOG%22%2C%22MSFT%22%2C%22HPQ%22
         $stocks = Stocks::model()->findAll();
         $stocksSymbols = "%22";        
@@ -313,6 +316,19 @@ class AdminController extends Controller
         $url = "https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20yahoo.finance.quotes%20where%20symbol%20in%20(".$stocksSymbols.")&format=json&diagnostics=true&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys&callback=";
         $response = file_get_contents($url);
         $stockInfo = json_decode($response, true);
-        //save stock info here       
+        //save stock info here      
+      //  echo $response ;
+        foreach($stockInfo['query']['results']['quote'] as $stock){
+            //echo $stock['symbol'];
+            $stockUpdate = Stocks::model()->findByAttributes(array("SYMBOL"=>$stock["symbol"]));
+            //query results quote {symbol}
+            $stockUpdate->PRICE = $stock['LastTradePriceOnly'];
+            $stockUpdate->CHANGE = $stock['PercentChange']; //PercentChangeFromFiftydayMovingAverage
+            $stockUpdate->NAME = $stock['Name'];
+            $stockUpdate->LASTUPDATED = new CDbExpression('NOW()');
+            $stockUpdate->save();
+            //LastTradePriceOnly
+            //PercentChange
+        }
     }
 }

@@ -1,5 +1,6 @@
 <?php include 'protected/views/layouts/HeaderSecure.php'?>
 <script><?php include 'js/TechView.js'?></script>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
      
      <div class ="container">
          <div class="row">
@@ -47,7 +48,7 @@
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: <?php echo $tech->TOTALSCORE ?> of 100</h3>
+                         <h3>TechChute Score: <?php echo $tech->TOTALSCORE ?> out of 100</h3>
                      </span>
                  </div>
                  <div class="row">
@@ -75,6 +76,10 @@
                     }
                     ?>
                  </div>
+
+     <h3>Available for Licensing:</h3>
+         <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
              </div>
              <div class="span2">
                  Related Stocks<br><br>
@@ -83,7 +88,7 @@
                      $scatid = $tech->SUBCATEGORYID;
                      $stocks = Stocks::model()->findAllByAttributes(array("SUBCATEGORYID"=>$scatid));
                      foreach($stocks as $stock){
-                        echo $stock->SYMBOL . " $" . $stock->PRICE . "<br>";
+                        echo $stock->SYMBOL . " $" . $stock->PRICE . " " . $stock->CHANGE . "<br>";
                      }
 
                  ?>
@@ -92,5 +97,20 @@
              </div>
          </div>
      </div>
+     <script>
+
+      //  alert(data + " data");
+      //  alert(countries + " countries");
+       // var countries1 = [];
+      //  countries1.push(countries);
+      //  alert(countries1);
+     //   var countries1 = [['Country'],['Germany'],['United States'],['China']];
+        google.load('visualization', '1', {'packages': ['geochart']});
+        google.setOnLoadCallback(drawRegionsMap);   
+
+      
+     </script>
+
+
 <br><br>
 <?php include 'protected/views/layouts/Footer.php'?>

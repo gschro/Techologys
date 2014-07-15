@@ -19,6 +19,10 @@ $(document).ready(function () {
     $("#qlist").click(function(){
         getListingQuestions();
     });      
+
+    $("#category").change(function(){
+        getListingQuestionData();
+    });
     
     $("#remove").click(function(){
         removeListingQuestion();
@@ -91,6 +95,31 @@ $(document).ready(function () {
     $("#addSCatStock").click(function(){
         addSubCatStock();
     });
+
+    $('#btnRight').click(function(e) {
+        var selectedOpts = $('#lstBox1 option:selected');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+
+        $('#lstBox2').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+
+    $('#btnLeft').click(function(e) {
+        var selectedOpts = $('#lstBox2 option:selected');
+        if (selectedOpts.length == 0) {
+            alert("Nothing to move.");
+            e.preventDefault();
+        }
+
+        $('#lstBox1').append($(selectedOpts).clone());
+        $(selectedOpts).remove();
+        e.preventDefault();
+    });
+
 
 });                  
 
@@ -268,14 +297,19 @@ function getListingQuestions(){
 }                   
 
 function getListingQuestionData(){
+ //   var category = $("#category option:selected").text();
     $.ajax({
         type: "POST",
+        data: {"category": $("#category option:selected").val()},
         url: "<?php echo Yii::app()->createUrl('Admin/GetListingQuestions')?>",
         success: function(data){
             var dat = JSON.parse(data);
             $("#listofquestions").empty();
+          //  alert(dat.cat);
             for(var i = 0; i < dat.questions.length; i++){
-              //  alert(dat.questions[i].QUESTION);
+               // alert(dat.questions[i].QUESTION);
+                //alert(dat.questions);
+              // alert(dat.cat);
                 $("#listofquestions").append($("<option></option>")
                 .attr("value",dat.questions[i].ID).text(dat.questions[i].QUESTION));
             }
@@ -452,3 +486,19 @@ function toggleBtn(id){
         $(id).attr("value","View All");  
     }    
 }
+
+// submit_bttn.click(function () {
+//             $('#lstBox2 option').each(function () {
+//             $(this).attr('selected', true);
+//         }); 
+
+
+
+    function selectAll(){
+        //$("#countries").click(function(){
+        $('#lstBox2 option').each(function () {
+            $(this).attr('selected', true);
+        });            
+      //      $('#countries option').prop('selected', true);
+        //});
+    }

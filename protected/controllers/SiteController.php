@@ -163,7 +163,7 @@ class SiteController extends Controller
 
                 session_start();
                 $_SESSION['user'] = $user->ID;
-                echo 'session started';
+              //  echo 'session started';
                 if(isset($_POST['page'])){
                     $page = $_POST['page'];                    
                 }
@@ -306,7 +306,18 @@ class SiteController extends Controller
             }
             else{
                 $model = Listing::model()->findByPK($pk);            
-                $this->render('TechView', array("tech"=>$model));               
+                 $listingcountry = ListingCountry::model()->findAllByAttributes(array("LISTINGID"=>$model->ID));
+
+                 $mapData = array();
+                 $mapData[] = ["Country"];
+                 foreach($listingcountry as $lc){
+                     $country = Country::model()->findByPK($lc->COUNTRYID);
+                     $temp = array();
+                     $temp[] = $country->NAME;
+                     $mapData[] = $temp;
+                 }
+
+                $this->render('TechView', array("tech"=>$model,"map"=>$mapData));               
             }
         }
         
@@ -344,6 +355,9 @@ class SiteController extends Controller
                 $listing->RIGHTSDETAILS = $rd;
                 $listing->LISTAGREEMENT = $_POST['agreement'];                
                 $listing->USERID = $_SESSION['user'];
+
+                //$listing->COUNTRIES =
+
                 $jsonListing = CJSON::Encode($listing);
                 $_SESSION['listing'] = $jsonListing;
                 
@@ -352,6 +366,17 @@ class SiteController extends Controller
               //  $message = "before questions";
                 $questions = Question::model()->findAll();
                 $details = array();
+
+                $countries = $_POST['countries'];
+                array_unshift($countries,'Country');
+                //$countries = CJSON::Encode($countries);
+             //   $message = $countries;
+                // $countriesAr = array();
+                // foreach($_POST['countries'] as $val){
+                //     $countriesAr[] = $val;
+                // }
+                // $countries = CJSON::Encode($countriesAr);
+
               //  $message = "this far";
                 $score = 0;
                 foreach($questions as $question){
@@ -365,8 +390,9 @@ class SiteController extends Controller
                 //    $message ="further";
                 }
                 $score = $score/count($details);
+
                 $jsonDetails = CJSON::Encode($details);
-                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score));
+                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries));
             }
             catch(Exception $e){
                 //$this->render('AddTech');            
@@ -391,6 +417,9 @@ class SiteController extends Controller
             //$details = json_decode($_POST['jsonDetails']);            
             $jlisting = json_decode($_SESSION['jsonListing']);
             $details = json_decode($_SESSION['jsonDetails']);
+
+            $countries = $_SESSION['countries'];
+
             $transaction = Yii::app()->db->beginTransaction();
             $message = "";
             try{
@@ -403,8 +432,11 @@ class SiteController extends Controller
                 $listing->PATENTSTATUS = $jlisting->PATENTSTATUS;
                 $listing->LISTAGREEMENT = $jlisting->LISTAGREEMENT;
                 $listing->RIGHTSDETAILS = $jlisting->RIGHTSDETAILS;
+                $listing->TOTALSCORE = 0;
                 if($listing->save()){      
                     $message .= " listing saved ";
+                                                echo "list tech 2";
+
                     for($i = 0; $i< count($details); $i++){
                         $qval = new QuestionValue();
                         $qval->LISTINGID = $listing->ID;
@@ -428,7 +460,31 @@ class SiteController extends Controller
                         }
                         unset($qval);
                     }
+                                echo "list tech 3";
+
                     if($good){
+                        foreach($countries as $val){
+                            //echo "this far 1";
+                            if($val !== "Country"){
+                            $listingCountry = new ListingCountry();
+                            $listing->refresh();
+                            //echo "this far 2";
+                            $listingCountry->LISTINGID = $listing->ID;
+                            //echo "this far 3 ". $val;                            
+                            $country = Country::model()->findByAttributes(array("NAME"=>$val));
+                            //echo "this far 4";           
+                            $id = $country->ID;                 
+                            $listingCountry->COUNTRYID = $id;
+                            
+                        //    echo "this far 5";                                                        
+                            if($listingCountry->save()){
+                        //    echo "this far 6";                            
+                            }
+                            else{
+                                $good = false;
+                            }
+                            }
+                        }
                    //     $message .= CJSON::Encode($listing->getErrors())." GOOD!";
                         $this->render('TechListed', array("message"=>$message));               
                         $transaction->commit();
@@ -439,18 +495,18 @@ class SiteController extends Controller
                         $jsonListing = CJSON::Encode($listing);
                         $jsonDetails = CJSON::Encode($details);
                         $message .= " Failed to list the technology";
-                        $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));               
+             //           $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));               
                         
                     }
                 }
                 else{
-                 //   $message = "hyelp ".CJSON::Encode($listing->getErrors());
-
+                    $message = "hyelp ".CJSON::Encode($listing->getErrors());
+                    echo $message;
                     $message .= " listing wouldn't save ";
                     $jsonListing = CJSON::Encode($listing);
                     $jsonDetails = CJSON::Encode($details);
                     $transaction->rollBack();
-                    $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));
+         //           $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));
                 }
               //  unset(Yii::app()->request->cookies['listing']);               
             }
@@ -459,7 +515,7 @@ class SiteController extends Controller
                $transaction->rollBack(); 
                $jsonListing = CJSON::Encode($listing);
                $jsonDetails = CJSON::Encode($details);               
-               $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));
+       //        $this->render('PreviewTech', array("jsonListing"=>$jsonListing, "jsonDetails"=>$jsonDetails,"message"=>$message));
             }
         }
 
@@ -467,6 +523,10 @@ class SiteController extends Controller
         session_start();
         $techId = $_SESSION['techViewId'];
         $result = "";
+        $listingCountries = ListingCountry::model()->findAllByAttributes(array("LISTINGID"=>$techId));
+        foreach($listingCountries as $val){
+            $val->delete();
+        }
         $questionValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$techId));
         foreach($questionValues as $val){
             $val->delete();
@@ -512,6 +572,10 @@ class SiteController extends Controller
         }
         echo CJSON::encode(array('result'=>$result,'title'=>'Unlist'));        
     //    $this->render('TechView', array("message"=>$result));        
+    }
+
+    public function actionGetCountries(){
+        $listingId = $_POST['listingid'];
     }
 
 }

@@ -8,6 +8,7 @@ return array(
 		'SYMBOL' => '',
 		'PRICE' => '',
 		'LASTUPDATED' => '',
+		'CHANGE' => '',
 	),
 	'sample2'=>array(
 		'SUBCATEGORYID' => '',
@@ -15,6 +16,7 @@ return array(
 		'SYMBOL' => '',
 		'PRICE' => '',
 		'LASTUPDATED' => '',
+		'CHANGE' => '',
 	),
 	*/
 );

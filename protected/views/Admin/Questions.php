@@ -1,6 +1,25 @@
 <?php include 'protected/views/layouts/HeaderSecure.php'?>
 <script><?php include 'js/Questions.js'?></script>
-     
+     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<style>
+ .multiselect {
+    width:20em;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    /overflow:auto;    
+}
+ 
+.multiselect label {
+    display:block;
+}
+ 
+.multiselect-on {
+    color:#ffffff;
+    background-color:#000099;
+}
+
+</style>
+
      <div class ="container">
          <div class="row">
              <div class="span6">
@@ -27,8 +46,15 @@
                                 <select id="category" name="category">
                                     <?php 
                                         $cats = QuestionCategory::model()->findAll();
+                                        $first = 1;
                                         foreach($cats as $cat){
-                                            echo "<option value='".$cat->ID."'>".$cat->CATEGORY."</option>";
+                                            if($first == 1){
+                                                echo "<option value='".$cat->ID." selected'>".$cat->CATEGORY."</option>";
+                                            }
+                                            else{
+                                                echo "<option value='".$cat->ID."'>".$cat->CATEGORY."</option>";                                                
+                                            }
+                                            $first++;
                                         }
                                     ?>
                                 </select><br>
@@ -41,6 +67,44 @@
                                 <div id="remove" class="btn btn-danger">Remove</div>
                         </div>                    
                 </form>
+                <form class="well" id="qpform" name="qpform">
+                    <h4>Add a Question Pair</h4>
+                        <label>Questions</label>
+                        <table style='width:370px;'>
+                            <tr>
+                                <td style='width:160px;'>
+                                    <b>Not Available</b><br/>
+                                   <select multiple="multiple" size="15" id='lstBox1' class='listBox'>
+                                    <?php 
+                                    $question = QuestionCategory::model()->findAll();
+                                      foreach($question as $quest){
+                                        ?>
+                                          <option value="<?php echo $quest->ID; ?>"><?php echo $quest->CATEGORY; ?></option>  
+                                        <?php
+                                      }
+                                    ?>
+                                </select>
+                            </td>
+                            <td style='width:50px;text-align:center;vertical-align:middle;'>
+                                <input type='button' id='btnRight' value ='  >  '/>
+                                <br/><input type='button' id='btnLeft' value ='  <  '/>
+                            </td>
+                            <td style='width:160px;'>
+                                <b>Available </b><br/>
+                                <select multiple="multiple" size="15" id='lstBox2' name="question[]" class='listBox'></select>
+                            </td>
+                        </tr>
+                        </table>
+
+                                <div id="addQP" class="btn btn-success" value="Add">Add</div>
+                                <input type="button" id="qplist" class="btn btn-default pull-right" value="View All"/> 
+                       <div id="removeQuestionPair"><br>
+                            <label>Current Question Pairs</label>
+                                <select  multiple="multiple" id="listofquestionpairs" class="span5" hidden>                        
+                                </select>                    
+                                <div id="remove" class="btn btn-danger">Remove</div>
+                        </div>                    
+                </form>                    
                 <legend>Security Questions</legend>
                 <form class="well" id="sqform" name="sqform">
                     <h4>Add a Security Question</h4>

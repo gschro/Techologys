@@ -1,4 +1,6 @@
 <?php include 'protected/views/layouts/HeaderSecure.php'?>
+<script type='text/javascript' src='https://www.google.com/jsapi'></script>
+<script><?php include 'js/PreviewTech.js'?></script>
      
      <div class ="container">
         <form method="post" action="<?php echo Yii::app()->createUrl('Site/ListTech')?>">
@@ -10,6 +12,7 @@
                    //  session_start();
                      $_SESSION['jsonListing'] = $jsonListing;
                      $_SESSION['jsonDetails'] = $jsonDetails;
+                     $_SESSION['countries'] = $countries;
                   //   echo "<input type='text' type='hidden' name='jsonListing' value='".$jsonListing."' />";
                  //    echo "<input type='text' type='hidden' name='jsonDetails' value='".$jsonDetails."' />";
                      
@@ -55,13 +58,25 @@
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: <?php //echo $listing->TOTALSCORE; ?>56 of 100</h3>
+                         <h3>TechChute Score: <?php //echo $listing->TOTALSCORE; ?>56 out of 100</h3>
                      </span>
                  </div>
                  <div class="row">
-                     <br>
-                     <input type="submit" class="btn btn-large span3 offset2" value="List my Tech!"/>
+                                    <h3>Available for Licensing:</h3>
+                                                    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+
                  </div>
+                <script>
+              //           $(document).ready(function () {
+                    google.load('visualization', '1', {'packages': ['geochart']});
+                    google.setOnLoadCallback(drawRegionsMap);   
+           
+       //  });
+                </script>
+
+                     <br>
+                     <input type="submit" class="btn btn-large span3 offset2" value="List my Tech!" />
+
              </div>
              <div class="span2">
                  Related Stocks<br><br>
@@ -70,7 +85,7 @@
                      $scatid = $listing->SUBCATEGORYID;
                      $stocks = Stocks::model()->findAllByAttributes(array("SUBCATEGORYID"=>$scatid));
                      foreach($stocks as $stock){
-                        echo $stock->SYMBOL . " $" . $stock->PRICE . "<br>";
+                        echo $stock->SYMBOL . " $" . $stock->PRICE . " " . $stock->CHANGE . "<br>";
                      }
                  ?>
 <!--<iframe src="http://edulifeline.com/includes/stocks_widget/?presets=pep,su,ntl" height="322px" width="250px" frameborder="0" scrolling="0"></iframe>                  -->

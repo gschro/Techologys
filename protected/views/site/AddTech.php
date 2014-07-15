@@ -5,7 +5,26 @@
 
     <?php include 'js/AddTech.js';?>
 </script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<style>
+ .multiselect {
+    width:20em;
+    height:15em;
+    border:solid 1px #c0c0c0;
+    overflow:auto;    
+}
+ 
+.multiselect label {
+    display:block;
+}
+ 
+.multiselect-on {
+    color:#ffffff;
+    background-color:#000099;
+}
 
+
+</style>
      
      <div class ="container">
          <form method="post" action="<?php echo Yii::app()->createUrl('Site/PreviewTech')?>">
@@ -38,8 +57,44 @@
                             </div>
                         </div>
                         </label>
+                        <div class="row">
+                        
+                          
+                        <?php 
+                            $countries = Country::model()->findAll(array("order"=>"NAME"));
+                        ?>
+                          
+
+                        <legend>Countries where licensing is available</legend>
+                        <table style='width:370px;'>
+                            <tr>
+                                <td style='width:160px;'>
+                                    <b>Not Available</b><br/>
+                                   <select multiple="multiple" size="15" id='lstBox1'>
+                                    <?php 
+                                      foreach($countries as $country){
+                                        ?>
+                                          <option value="<?php echo $country->NAME; ?>"><?php echo $country->NAME; ?></option>  
+                                        <?php
+                                      }
+                                    ?>
+                                </select>
+                            </td>
+                            <td style='width:50px;text-align:center;vertical-align:middle;'>
+                                <input type='button' id='btnRight' value ='  >  '/>
+                                <br/><input type='button' id='btnLeft' value ='  <  '/>
+                            </td>
+                            <td style='width:160px;'>
+                                <b>Available </b><br/>
+                                <select multiple="multiple" size="15" id='lstBox2' name="countries[]"></select>
+                            </td>
+                        </tr>
+                        </table>
+
+
+                        </div>
                         <div class="row text-center">
-                            <input type="submit" id="preview" class="btn btn-large btn-primary" value="Preview Listing"/>                                                    
+                            <input type="submit" id="preview" class="btn btn-large btn-primary" onclick="selectAll();" value="Preview Listing"/>  
                         </div>
                     </div>
                     <div class="span3">
@@ -52,6 +107,7 @@
                             foreach($cats as $cat){
                                 echo "<option value='".$cat->ID."'>".$cat->CATEGORY."</option>";
                             }
+                           // onclick="selectAll();"
                         ?>
                             </select><br>     
                             <label>Sub Category</label>

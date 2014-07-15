@@ -1,3 +1,6 @@
+
+   // google.load('visualization', '1', {'packages': ['geochart']});
+  //  google.setOnLoadCallback(drawRegionsMap);
 $(document).ready(function () {
     //loadCats();
     listTech();
@@ -44,4 +47,31 @@ function loadSubCats(){
             }
         });                                                            
 }
+
+      function drawRegionsMap() {
+       // var dat = [['Country'],['Germany'],['United States'],['China']];
+  //      var countries = JSON.parse(dat);
+      //  alert(countries);
+       var dat = '<?php echo CJSON::Encode($map); ?>';
+       var dat = JSON.parse(dat);
+       // var ar = new array();
+       // for(var i = 0; i < dat.length; i++){
+       //    ar.push(dat[i]);
+       // }
+     //  alert(dat);
+        var data = google.visualization.arrayToDataTable(dat);
+
+        var options = {
+          keepAspectRatio: true,
+        };
+
+        var chart = new google.visualization.GeoChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+    };   
+   
+
+
+
+
+  
                             
