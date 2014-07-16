@@ -15,7 +15,7 @@
     </div>
     <div class ="hero-unit">
         <!--<h1>TechChute</h1>-->    <p><a href="<?php echo Yii::app()->createUrl('Site/LoginView'); ?>" class="btn btn-primary btn-large pull-right">Sign Up &raquo;</a><p/>
-        <p>Welcome!!!!###!!!@@@NIKS Techologys, connecting technology and investors</p>         
+        <p>Welcome!!!!###!!!@@@Nog NIKS  Techologys, connecting technology and investors</p>         
     </div>
 
     <div class="row">
