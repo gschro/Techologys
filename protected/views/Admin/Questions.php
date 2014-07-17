@@ -78,7 +78,7 @@ select{
                                     <b>Not Available</b><br/>
                                    <select multiple="multiple" size="15" id='lstBox1' class='listBox'>
                                     <?php 
-                            //        $question = QuestionCategory::model()->findAll();
+                            //    ?    $question = QuestionCategory::model()->findAll();
                             //          foreach($question as $quest){
                                         ?>
                                        <option value="<?php //echo $quest->ID; ?>"><?php //echo $quest->CATEGORY; ?></option>  
