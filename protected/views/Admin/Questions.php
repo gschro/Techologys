@@ -73,7 +73,7 @@ select{
                     <h4>Add a Category Pair</h4>
                         <label>Categories</label>
                       <!--  <table style='width:370px;'>
-                            <tr>PLEASE
+                            <tr>PLEASEHELP
                                 <td style='width:160px;'>
                                     <b>Not Available</b><br/>
                                    <select multiple="multiple" size="15" id='lstBox1' class='listBox'>
