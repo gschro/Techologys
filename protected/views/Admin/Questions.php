@@ -17,7 +17,9 @@
     color:#ffffff;
     background-color:#000099;
 }
-
+select{
+    width: 205px;
+}
 </style>
 
      <div class ="container">
@@ -68,20 +70,20 @@
                         </div>                    
                 </form>
                 <form class="well" id="qpform" name="qpform">
-                    <h4>Add a Question Pair</h4>
-                        <label>Questions</label>
-                        <table style='width:370px;'>
+                    <h4>Add a Category Pair</h4>
+                        <label>Categories</label>
+                      <!--  <table style='width:370px;'>
                             <tr>
                                 <td style='width:160px;'>
                                     <b>Not Available</b><br/>
                                    <select multiple="multiple" size="15" id='lstBox1' class='listBox'>
                                     <?php 
-                                    $question = QuestionCategory::model()->findAll();
-                                      foreach($question as $quest){
+                            //        $question = QuestionCategory::model()->findAll();
+                            //          foreach($question as $quest){
                                         ?>
-                                          <option value="<?php echo $quest->ID; ?>"><?php echo $quest->CATEGORY; ?></option>  
+                                       <option value="<?php //echo $quest->ID; ?>"><?php //echo $quest->CATEGORY; ?></option>  
                                         <?php
-                                      }
+           //                           }
                                     ?>
                                 </select>
                             </td>
@@ -94,15 +96,37 @@
                                 <select multiple="multiple" size="15" id='lstBox2' name="question[]" class='listBox'></select>
                             </td>
                         </tr>
-                        </table>
-
-                                <div id="addQP" class="btn btn-success" value="Add">Add</div>
-                                <input type="button" id="qplist" class="btn btn-default pull-right" value="View All"/> 
-                       <div id="removeQuestionPair"><br>
+                        </table>-->
+                        <div>
+                                <select id="cp1">
+                                    <?php 
+                                    $category = QuestionCategory::model()->findAll();
+                                      foreach($category as $cat){
+                                        ?>
+                                          <option value="<?php echo $cat->ID; ?>"><?php echo $cat->CATEGORY; ?></option>  
+                                        <?php
+                                      }
+                                    ?>
+                                </select>
+                                <select id="cp2">
+                                    <?php 
+                                      foreach($category as $cat){
+                                        ?>
+                                          <option value="<?php echo $cat->ID; ?>"><?php echo $cat->CATEGORY; ?></option>  
+                                        <?php
+                                      }
+                                    ?>
+                                </select>
+                                <p>
+                                    <div id="addCP" class="btn btn-success" value="Add">Add</div>                                
+                                    <input type="button" id="cplist" class="btn btn-default pull-right" value="View All"/>                                     
+                                </p>
+                            </div>
+                       <div id="removeCategoryPair"><br>
                             <label>Current Question Pairs</label>
-                                <select  multiple="multiple" id="listofquestionpairs" class="span5" hidden>                        
+                                <select  multiple="multiple" id="listofcategorypairs" class="span5" hidden>                        
                                 </select>                    
-                                <div id="remove" class="btn btn-danger">Remove</div>
+                                <div id="removeCP" class="btn btn-danger">Remove</div>
                         </div>                    
                 </form>                    
                 <legend>Security Questions</legend>

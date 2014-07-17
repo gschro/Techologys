@@ -53,6 +53,63 @@ class AdminController extends Controller
                 //$this->render("Questions",array('message'=>$message, "messageType"=>$this->type));
                 echo CJSON::encode(array("message"=>$message, "messageType"=>$this->type));
         }
+
+        public function actionAddCategoryPair(){
+            $message = "Please enter a Category and a Category";
+           
+            try{
+                $CategoryPair = new CategoryPair();
+
+                $CategoryPair->CATEGORY1ID = $_POST['cp1id'];
+                $CategoryPair->CATEGORY2ID = $_POST['cp2id'];
+                if($CategoryPair->save()){
+                    $message = "Category Pair successfully created!";
+                }
+                else{
+     //               $message = " validate ". CJSON::encode($CategoryPair->validate())." ". CJSON::encode($CategoryPair->getErrors());
+                    $message = "Failed to create Category Pair: " . CJSON::encode($CategoryPair->getErrors());                    
+                }
+            }
+            catch(Exception $e){
+                $message = "fail ".$e->getMessage();
+            }
+            echo CJSON::encode(array("message"=>$message, "messageType"=>$this->type));            
+        }
+
+        public function actionGetCategoryPairs(){    
+           $categoryPairs = array();
+          // $category = "test";
+            $categories = CategoryPair::model()->findAll();
+            foreach($categories as $cat){
+                $c1 = QuestionCategory::model()->findByPK($cat->CATEGORY1ID);
+                $c2 = QuestionCategory::model()->findByPK($cat->CATEGORY2ID);
+                $categoryPairs[] = array("ID"=>$cat->ID,"category1"=>$c1->CATEGORY,"category2"=>$c2->CATEGORY);
+            }
+          // $categorys = Category::model()->findAll();
+            echo CJSON::encode(array('categorypairs'=>$categoryPairs));            
+        }
+
+        function actionRemoveCategoryPair(){
+            $result = "";
+            $category = CategoryPair::model()->findByPK($_POST['cpId']);
+            if($category->delete()){
+                $result = "Success";
+            }
+            echo CJSON::encode(array('message'=>$result));
+        }
+        // ADD SKELETON
+        // public function actionAddQuestionPair(){
+        //     $message = "Please enter a Question and a Category";
+           
+        //  //   if(isset($_POST['question']) && isset($_POST["category"])){
+        //     try{
+
+        //     }
+        //     catch(Exception $e){
+        //         $message = $e->getMessage();
+        //     }
+        //     echo CJSON::encode(array("message"=>$message, "messageType"=>$this->type));            
+        // }        
                       
         public function actionAddSecurityQuestion(){
             $message = "Please enter a security question";
