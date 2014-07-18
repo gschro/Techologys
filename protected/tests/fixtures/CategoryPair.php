@@ -3,12 +3,12 @@
 return array(
 	/*
 	'sample1'=>array(
-		'CATEGORY1ID' => '',
-		'CATEGORY2ID' => '',
+		'PAIRINGID' => '',
+		'CATEGORYID' => '',
 	),
 	'sample2'=>array(
-		'CATEGORY1ID' => '',
-		'CATEGORY2ID' => '',
+		'PAIRINGID' => '',
+		'CATEGORYID' => '',
 	),
 	*/
 );

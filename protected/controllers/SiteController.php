@@ -153,7 +153,7 @@ class SiteController extends Controller
         try{
         $email = $_POST['email'];
         $user = EmailAccount::model()->findByAttributes(array('EMAIL'=>$email));
-
+        //$transaction = Yii::app()->db->beginTransaction();
         if(!is_null($user->EMAIL)){
 
             $password = $_POST['password'];
@@ -182,7 +182,7 @@ class SiteController extends Controller
         }
         catch(Exception $e){
                 $message = "Could not create account ".$e->getMessage();
-                $transaction->rollBack(); 
+             //   $transaction->rollBack(); 
                 $this->render('CreateAccount', array("message"=>$message));
             }
 	}

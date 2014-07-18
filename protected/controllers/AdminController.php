@@ -58,16 +58,21 @@ class AdminController extends Controller
             $message = "Please enter a Category and a Category";
            
             try{
-                $CategoryPair = new CategoryPair();
+                $Pairing = new Pairing();
+                $Pairing->save();
 
-                $CategoryPair->CATEGORY1ID = $_POST['cp1id'];
-                $CategoryPair->CATEGORY2ID = $_POST['cp2id'];
-                if($CategoryPair->save()){
-                    $message = "Category Pair successfully created!";
-                }
-                else{
-     //               $message = " validate ". CJSON::encode($CategoryPair->validate())." ". CJSON::encode($CategoryPair->getErrors());
-                    $message = "Failed to create Category Pair: " . CJSON::encode($CategoryPair->getErrors());                    
+                for($i = 1; $i<3; $i++){
+                    $CategoryPair = new CategoryPair();
+
+                    $CategoryPair->PAIRINGID = $Pairing->ID;
+                    $CategoryPair->CATEGORYID = $_POST['cp'.$i.'id'];
+                    if($CategoryPair->save()){
+                        $message = "Category Pair successfully created!";
+                    }
+                    else{
+         //               $message = " validate ". CJSON::encode($CategoryPair->validate())." ". CJSON::encode($CategoryPair->getErrors());
+                        $message = "Failed to create Category Pair: " . CJSON::encode($CategoryPair->getErrors());                    
+                    }
                 }
             }
             catch(Exception $e){
@@ -79,22 +84,48 @@ class AdminController extends Controller
         public function actionGetCategoryPairs(){    
            $categoryPairs = array();
           // $category = "test";
-            $categories = CategoryPair::model()->findAll();
-            foreach($categories as $cat){
-                $c1 = QuestionCategory::model()->findByPK($cat->CATEGORY1ID);
-                $c2 = QuestionCategory::model()->findByPK($cat->CATEGORY2ID);
-                $categoryPairs[] = array("ID"=>$cat->ID,"category1"=>$c1->CATEGORY,"category2"=>$c2->CATEGORY);
+
+            $pairings = Pairing::model()->findAll();
+            foreach($pairings as $p){
+                $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
+                $catArray = array();
+                $i = 1;
+                    foreach($catpairs as $cp){
+                        $catArray["category".$i] = $cp->category->CATEGORY;
+                        $i++;
+                    }                
+                    $catArray["ID"] = $p->ID;
+                    $categoryPairs[] = $catArray;                
             }
+
           // $categorys = Category::model()->findAll();
             echo CJSON::encode(array('categorypairs'=>$categoryPairs));            
         }
 
         function actionRemoveCategoryPair(){
-            $result = "";
-            $category = CategoryPair::model()->findByPK($_POST['cpId']);
-            if($category->delete()){
-                $result = "Success";
+           $result = "";
+         //  $result = $_POST['cpId'];
+            $catpairings = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$_POST['cpId']));
+          //  $transaction = Yii::app()->db->beginTransaction();            
+
+            foreach($catpairings as $cp){
+                if(!$cp->delete()){
+                    $result .= " ".CJSON::encode($cp->getErrors());                    
+                }
             }
+            $pairing = Pairing::model()->findByPK($_POST['cpId']);
+
+            if($pairing->delete()){
+              // $result = CJSON::encode($pairing->getErrors());
+                $result = "success";
+            }
+            else{
+                $result = CJSON::encode($pairing->getErrors());
+            }            
+
+            // $transaction->commit();
+            //    $transaction->rollBack();
+        //  $result =$pairing->ID;
             echo CJSON::encode(array('message'=>$result));
         }
         // ADD SKELETON

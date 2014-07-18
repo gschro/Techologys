@@ -1,21 +1,19 @@
 <?php
 
 /**
- * This is the model class for table "categorypair".
+ * This is the model class for table "pairing".
  *
- * The followings are the available columns in table 'categorypair':
+ * The followings are the available columns in table 'pairing':
  * @property integer $ID
- * @property integer $PAIRINGID
- * @property integer $CATEGORYID
  */
-class CategoryPair extends CActiveRecord
+class Pairing extends CActiveRecord
 {
 	/**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'categorypair';
+		return 'pairing';
 	}
 
 	/**
@@ -26,11 +24,9 @@ class CategoryPair extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('PAIRINGID, CATEGORYID', 'required'),
-			array('PAIRINGID, CATEGORYID', 'numerical', 'integerOnly'=>true),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('ID, PAIRINGID, CATEGORYID', 'safe', 'on'=>'search'),
+			array('ID', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -42,8 +38,7 @@ class CategoryPair extends CActiveRecord
 		// NOTE: you may need to adjust the relation name and the related
 		// class name for the relations automatically generated below.
 		return array(
-			'category' => array(self::BELONGS_TO, 'Questioncategory', 'CATEGORYID'),
-			'pairing' => array(self::BELONGS_TO, 'Pairing', 'PAIRINGID'),
+			'categorypairs' => array(self::HAS_MANY, 'Categorypair', 'PAIRINGID'),
 		);
 	}
 
@@ -54,8 +49,6 @@ class CategoryPair extends CActiveRecord
 	{
 		return array(
 			'ID' => 'Id',
-			'PAIRINGID' => 'Pairingid',
-			'CATEGORYID' => 'Categoryid',
 		);
 	}
 
@@ -79,18 +72,14 @@ class CategoryPair extends CActiveRecord
 
 		$criteria->compare('ID',$this->ID);
 
-		$criteria->compare('PAIRINGID',$this->PAIRINGID);
-
-		$criteria->compare('CATEGORYID',$this->CATEGORYID);
-
-		return new CActiveDataProvider('CategoryPair', array(
+		return new CActiveDataProvider('Pairing', array(
 			'criteria'=>$criteria,
 		));
 	}
 
 	/**
 	 * Returns the static model of the specified AR class.
-	 * @return CategoryPair the static model class
+	 * @return Pairing the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
