@@ -91,7 +91,10 @@ class AdminController extends Controller
                 $catArray = [];
                 $i = 1;
                     foreach($catpairs as $cp){
-                        $catArray["category".$i] = $cp->category->CATEGORY;
+                        $cat = Category::model()->findByPK($cp->CATEGORYID);
+                        $catArray["category".$i] = $cat->CATEGORY;
+//                        $catArray["category".$i] = $cp->category->CATEGORY;
+
                         $i++;
                     }                
                     $catArray["ID"] = $p->ID;
