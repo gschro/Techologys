@@ -51,7 +51,7 @@ select{
                                         $first = 1;
                                         foreach($cats as $cat){
                                             if($first == 1){
-                                                echo "<option value='".$cat->ID." selected'>".$cat->CATEGORY."</option>";
+                                                echo "<option value='".$cat->ID."' selected>".$cat->CATEGORY."</option>";
                                             }
                                             else{
                                                 echo "<option value='".$cat->ID."'>".$cat->CATEGORY."</option>";                                                

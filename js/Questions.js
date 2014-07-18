@@ -275,11 +275,11 @@ function getListingCategories(){
 
 function addListingQuestion(){
     var cat = $("#category").val();
-    var quest = $("#category").val();        
+    var quest = $("#question").val();        
     $.ajax({
       type: "POST",
       url: "<?php echo Yii::app()->createUrl('Admin/AddListingQuestion') ?>",
-      data: {"category":cat, "category":quest},
+      data: {"category":cat, "question":quest},
       success: function(data){
           var dat = JSON.parse(data);
           getListingQuestionData();       
@@ -289,7 +289,7 @@ function addListingQuestion(){
 }
 
 function removeListingQuestion(){
-    var qid = $("#listofcategorys").val();
+    var qid = $("#listofquestions").val();
     $.ajax({
       type: "POST",
       url: "<?php echo Yii::app()->createUrl('Admin/RemoveListingQuestion') ?>",
@@ -317,14 +317,14 @@ function getListingQuestionData(){
         url: "<?php echo Yii::app()->createUrl('Admin/GetListingQuestions')?>",
         success: function(data){
             var dat = JSON.parse(data);
-            $("#listofcategorys").empty();
+            $("#listofquestions").empty();
           //  alert(dat.cat);
-            for(var i = 0; i < dat.categorys.length; i++){
-               // alert(dat.categorys[i].QUESTION);
-                //alert(dat.categorys);
+            for(var i = 0; i < dat.questions.length; i++){
+               // alert(dat.questions[i].QUESTION);
+                //alert(dat.questions);
               // alert(dat.cat);
-                $("#listofcategorys").append($("<option></option>")
-                .attr("value",dat.categorys[i].ID).text(dat.categorys[i].QUESTION));
+                $("#listofquestions").append($("<option></option>")
+                .attr("value",dat.questions[i].ID).text(dat.questions[i].QUESTION));
             }
         }
     });
@@ -367,8 +367,8 @@ function getCategoryPairData(){
             $("#listofcategorypairs").empty();
           //  alert(dat.cat);
             for(var i = 0; i < dat.categorypairs.length; i++){
-               // alert(dat.categorys[i].QUESTION);
-                //alert(dat.categorys);
+               // alert(dat.questions[i].QUESTION);
+                //alert(dat.questions);
               alert(JSON.stringify(dat.categorypairs));
                 $("#listofcategorypairs").append($("<option></option>")
                 .attr("value",dat.categorypairs[i].ID).text(dat.categorypairs[i].category1+" & "+dat.categorypairs[i].category2));
@@ -407,11 +407,11 @@ function getSecurityQuestionData(){
         url: "<?php echo Yii::app()->createUrl('Admin/GetSecurityQuestions')?>",
         success: function(data){
             var dat = JSON.parse(data);
-            $("#listofscategorys").empty();
-            for(var i = 0; i < dat.categorys.length; i++){
-              //  alert(dat.categorys[i].QUESTION);
-                $("#listofscategorys").append($("<option></option>")
-                .attr("value",dat.categorys[i].ID).text(dat.categorys[i].SECURITYQUESTION));
+            $("#listofsquestions").empty();
+            for(var i = 0; i < dat.questions.length; i++){
+              //  alert(dat.questions[i].QUESTION);
+                $("#listofsquestions").append($("<option></option>")
+                .attr("value",dat.questions[i].ID).text(dat.questions[i].SECURITYQUESTION));
             }
         }
     });    
@@ -432,7 +432,7 @@ function addSecurityQuestion(){
 }
 
 function removeSecurityQuestion(){
-    var sqid = $("#listofscategorys").val();
+    var sqid = $("#listofsquestions").val();
     $.ajax({
       type: "POST",
       url: "<?php echo Yii::app()->createUrl('Admin/RemoveSecurityQuestion') ?>",

@@ -41,7 +41,10 @@ class AdminController extends Controller
                 $cat = QuestionCategory::model()->findByPK($Question->QUESTIONCATEGORYID);
                 $name = str_replace(" ","",$cat->CATEGORY);
                 $Question->NAME = $name.$qNum;
-                $message = $this->saveModel($Question, "Question");   
+             //   $Question->validate();
+             //   $message=CJSON::encode($Question->getErrors());
+              //  $message  = $Question->QUESTIONCATEGORYID;
+               $message = $this->saveModel($Question, "Question");   
                 //$message ="set";
             }
             catch(Exception $e){
@@ -82,19 +85,16 @@ class AdminController extends Controller
         }
 
         public function actionGetCategoryPairs(){    
-           $categoryPairs = [];
+           $categoryPairs = array();
           // $category = "test";
 
             $pairings = Pairing::model()->findAll();
             foreach($pairings as $p){
                 $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
-                $catArray = [];
+                $catArray = array();
                 $i = 1;
                     foreach($catpairs as $cp){
-                        $cat = Category::model()->findByPK($cp->CATEGORYID);
-                        $catArray["category".$i] = $cat->CATEGORY;
-//                        $catArray["category".$i] = $cp->category->CATEGORY;
-
+                        $catArray["category".$i] = $cp->category->CATEGORY;
                         $i++;
                     }                
                     $catArray["ID"] = $p->ID;
