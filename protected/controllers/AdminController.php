@@ -91,7 +91,7 @@ class AdminController extends Controller
                 $catArray = [];
                 $i = 1;
                     foreach($catpairs as $cp){
-                        $catArray["category".$i] = "test";//$cp->category->CATEGORY;
+                        $catArray["category".$i] = $cp->category->CATEGORY;
                         $i++;
                     }                
                     $catArray["ID"] = $p->ID;
