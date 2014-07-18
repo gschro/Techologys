@@ -369,7 +369,7 @@ function getCategoryPairData(){
             for(var i = 0; i < dat.categorypairs.length; i++){
                // alert(dat.categorys[i].QUESTION);
                 //alert(dat.categorys);
-         //      alert(JSON.stringify(dat.categorypairs));
+              alert(JSON.stringify(dat.categorypairs));
                 $("#listofcategorypairs").append($("<option></option>")
                 .attr("value",dat.categorypairs[i].ID).text(dat.categorypairs[i].category1+" & "+dat.categorypairs[i].category2));
             }
