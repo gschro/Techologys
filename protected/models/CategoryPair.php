@@ -43,7 +43,7 @@ class CategoryPair extends CActiveRecord
 		// class name for the relations automatically generated below.
 		return array(
 			'category' => array(self::BELONGS_TO, 'questioncategory', 'CATEGORYID'),
-			'pairing' => array(self::BELONGS_TO, 'pairing', 'PAIRINGID'),
+			'pairing' => array(self::BELONGS_TO, 'Pairing', 'PAIRINGID'),
 		);
 	}
 
@@ -54,8 +54,8 @@ class CategoryPair extends CActiveRecord
 	{
 		return array(
 			'ID' => 'Id',
-			'PAIRINGID' => 'pairingid',
-			'CATEGORYID' => 'categoryid',
+			'PAIRINGID' => 'Pairingid',
+			'CATEGORYID' => 'Categoryid',
 		);
 	}
 
