@@ -90,13 +90,13 @@ class AdminController extends Controller
 
             $pairings = Pairing::model()->findAll();
             foreach($pairings as $p){
-          //       $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
+                $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
           //       $catArray = [];
           //       $i = 1;
-          //           foreach($catpairs as $cp){
+                     foreach($catpairs as $cp){
           //               $catArray["category".$i] = $cp->category->CATEGORY;
           //               $i++;
-          //           }                
+                     }                
           //           $catArray["ID"] = $p->ID;
           //           $categoryPairs[] = $catArray;                
              }
