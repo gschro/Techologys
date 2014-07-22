@@ -88,8 +88,8 @@ class AdminController extends Controller
             $categoryPairs = [];
           // // $category = "test";
 
-          //   $pairings = Pairing::model()->findAll();
-          //   foreach($pairings as $p){
+            $pairings = Pairing::model()->findAll();
+            foreach($pairings as $p){
           //       $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
           //       $catArray = [];
           //       $i = 1;
@@ -99,7 +99,7 @@ class AdminController extends Controller
           //           }                
           //           $catArray["ID"] = $p->ID;
           //           $categoryPairs[] = $catArray;                
-          //   }
+             }
 
           // $categorys = Category::model()->findAll();
             $categoryPairs[] = "Test1";
