@@ -91,19 +91,19 @@ class AdminController extends Controller
             $pairings = Pairing::model()->findAll();
             foreach($pairings as $p){
                 $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
-          //       $catArray = [];
-          //       $i = 1;
+                 $catArray = [];
+                 $i = 1;
                      foreach($catpairs as $cp){
-          //               $catArray["category".$i] = $cp->category->CATEGORY;
-          //               $i++;
+                        $catArray["category".$i] = $cp->category->CATEGORY;
+                        $i++;
                      }                
-          //           $catArray["ID"] = $p->ID;
-          //           $categoryPairs[] = $catArray;                
+                     $catArray["ID"] = $p->ID;
+                     $categoryPairs[] = $catArray;                
              }
 
           // $categorys = Category::model()->findAll();
-            $categoryPairs[] = "Test1";
-            $categoryPairs[] = "Test2";
+          //  $categoryPairs[] = "Test1";
+           // $categoryPairs[] = "Test2";
 
             echo CJSON::encode(array('categorypairs'=>$categoryPairs));            
         }
