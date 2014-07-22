@@ -94,7 +94,7 @@ class AdminController extends Controller
                  $catArray = [];
                  $i = 1;
                      foreach($catpairs as $cp){
-                        $catArray[CJSON::encode("category".$i)] = $cp->category->CATEGORY;
+                        $catArray["category$i"] = $cp->category->CATEGORY;
                         $i++;
                      }                
                      $catArray["ID"] = $p->ID;
