@@ -85,24 +85,24 @@ class AdminController extends Controller
         }
 
         public function actionGetCategoryPairs(){    
-           $categoryPairs = [];
-          // $category = "test";
+          //  $categoryPairs = [];
+          // // $category = "test";
 
-            $pairings = Pairing::model()->findAll();
-            foreach($pairings as $p){
-                $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
-                $catArray = [];
-                $i = 1;
-                    foreach($catpairs as $cp){
-                        $catArray["category".$i] = $cp->category->CATEGORY;
-                        $i++;
-                    }                
-                    $catArray["ID"] = $p->ID;
-                    $categoryPairs[] = $catArray;                
-            }
+          //   $pairings = Pairing::model()->findAll();
+          //   foreach($pairings as $p){
+          //       $catpairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$p->ID));
+          //       $catArray = [];
+          //       $i = 1;
+          //           foreach($catpairs as $cp){
+          //               $catArray["category".$i] = $cp->category->CATEGORY;
+          //               $i++;
+          //           }                
+          //           $catArray["ID"] = $p->ID;
+          //           $categoryPairs[] = $catArray;                
+          //   }
 
           // $categorys = Category::model()->findAll();
-            echo CJSON::encode(array('categorypairs'=>$categoryPairs));            
+            echo CJSON::encode(array('message'=>"TESTTTT"));            //'categorypairs'=>$categoryPairs
         }
 
         function actionRemoveCategoryPair(){
