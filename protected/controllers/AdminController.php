@@ -85,7 +85,7 @@ class AdminController extends Controller
         }
 
         public function actionGetCategoryPairs(){    
-            $categoryPairs = array();
+            $categoryPairs = [];
           // // $category = "test";
 
           //   $pairings = Pairing::model()->findAll();
