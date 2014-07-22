@@ -365,11 +365,11 @@ function getCategoryPairData(){
         success: function(data){
             var dat = JSON.parse(data);
             $("#listofcategorypairs").empty();
-          //  alert(dat.cat);
+            alert(JSON.stringify(dat.cat+" TEST"));
             for(var i = 0; i < dat.categorypairs.length; i++){
                // alert(dat.questions[i].QUESTION);
                 //alert(dat.questions);
-              alert(JSON.stringify(dat.categorypairs));
+           //   alert(JSON.stringify(dat.categorypairs));
                 $("#listofcategorypairs").append($("<option></option>")
                 .attr("value",dat.categorypairs[i].ID).text(dat.categorypairs[i].category1+" & "+dat.categorypairs[i].category2));
             }
