@@ -94,11 +94,11 @@ class AdminController extends Controller
                  $catArray = [];
                  $i = 1;
                      foreach($catpairs as $cp){
-                        $catArray["category".$i] = $cp->category->CATEGORY;
+             //           $catArray["category".$i] = $cp->category->CATEGORY;
                         $i++;
                      }                
                      $catArray["ID"] = $p->ID;
-                     $categoryPairs[] = $catArray;                
+                     $categoryPairs[] = $catArray;                                     
              }
 
           // $categorys = Category::model()->findAll();
