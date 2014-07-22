@@ -85,7 +85,7 @@ class AdminController extends Controller
         }
 
         public function actionGetCategoryPairs(){    
-          //  $categoryPairs = [];
+            $categoryPairs = [];
           // // $category = "test";
 
           //   $pairings = Pairing::model()->findAll();
@@ -102,7 +102,10 @@ class AdminController extends Controller
           //   }
 
           // $categorys = Category::model()->findAll();
-            echo CJSON::encode(array('message'=>"TESTTTT"));            //'categorypairs'=>$categoryPairs
+            $categoryPairs[] = "Test1";
+            $categoryPairs[] = "Test2";
+
+            echo CJSON::encode(array('categorypairs'=>$categoryPairs));            
         }
 
         function actionRemoveCategoryPair(){
