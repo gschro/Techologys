@@ -1,7 +1,7 @@
-<?php include 'protected/views/layouts/HeaderSecure.php'?>
-<script><?php include 'js/TechView.js'?></script>
+<?php include 'protected/views/layouts/HeaderSecure.php';?>
 <script type='text/javascript' src='https://www.google.com/jsapi'></script>
-     
+<script><?php include 'js/TechView.js';?></script>
+
      <div class ="container">
          <div class="row">
              <div class="span10">
@@ -27,40 +27,12 @@
                          else{
                              $label = "label-important";
                          }
-                        echo 'Pre-existing rights <span class="label '.$label.'">'.$status.'</span>'
+                        echo 'Pre-existing rights <span class="label '.$label.'">'.$status.'</span>';
                          
                          ?>
                      </p>
                  </div>
-                 <div class="row">
-                    <ul class="thumbnails">
-                        <?php 
-                            $categoryPairs = CategoryPair::model->findAll();
-                            foreach($categoryPairs as $cp){
-                                $cat1 = Category::model->findByPk($cp->CATEGORY1ID);
-                                $cat2 = Category::model->findByPk($cp->CATEGORY2ID);
-                                $cat1QuestValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$a,"CATEGORYID"=>$cat1->ID));
-                                $cat2QuestValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$a,"CATEGORYID"=>$cat2->ID));
-                                
-
-                          $t=      "                        <li class="span5">
-                                <img src='' alt=''>
-                            <h3>Growth</h3>
-                            <p>Here's a graph about stuff</p>
-                            </li>     ";
-                            }
-                        ?>
-                        <li class="span5">
-                                <img src="http://ts3.mm.bing.net/th?id=H.4825671903742110&pid=1.7" alt="">
-                            <h3>Growth</h3>
-                            <p>Here's a graph about stuff</p>
-                        </li>    
-                        <li class="span5">
-                                <img src="http://ts3.mm.bing.net/th?id=H.4825671903742110&pid=1.7" alt="">
-                            <h3>Marketability</h3>
-                            <p>Here's another graph about more stuff</p>                    
-                        </li> 
-                    </ul>                     
+                 <div class="row" id="charts">
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
@@ -113,20 +85,12 @@
              </div>
          </div>
      </div>
-     <script>
-
-      //  alert(data + " data");
-      //  alert(countries + " countries");
-       // var countries1 = [];
-      //  countries1.push(countries);
-      //  alert(countries1);
-     //   var countries1 = [['Country'],['Germany'],['United States'],['China']];
-        google.load('visualization', '1', {'packages': ['geochart']});
+<script>
+        google.load('visualization', '1', {'packages': ['geochart','corechart']});
         google.setOnLoadCallback(drawRegionsMap);   
-
-      
-     </script>
+        google.setOnLoadCallback(drawChart);
+</script>
 
 
 <br><br>
-<?php include 'protected/views/layouts/Footer.php'?>
+<?php include 'protected/views/layouts/Footer.php'; ?>

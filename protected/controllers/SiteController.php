@@ -317,8 +317,55 @@ class SiteController extends Controller
                      $mapData[] = $temp;
                  }
 
-                $this->render('TechView', array("tech"=>$model,"map"=>$mapData));               
+                $pairings = Pairing::model()->findAll();
+                $categories = [];
+                $scorePairs = [];
+                
+                foreach($pairings as $pair){
+                    $cats = [];
+                    $categoryPairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$pair->ID));
+                    $catTotals = [];
+                    $catTotals[] = "Score";
+                    $catColumns = []; 
+                    $catColumns[] = "ID";
+                    foreach($categoryPairs as $cp){
+                        //go through each q category
+                      //  $cats[] = $cpNew;
+                        $catQuestValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$model->ID));
+                        //$cat2QuestValues = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$model->ID));
+                        
+                        //at2Total = 0;
+                        $catTotal = 0;
+                        $k = 1;
+                        foreach($catQuestValues as $cqv){
+                            $quest = Question::model()->findByPk($cqv->QUESTIONID);
+                            if($quest->QUESTIONCATEGORYID === $cp->CATEGORYID){
+                                $catTotal += $cqv->VALUE;
+                                $k++;
+                            }
+                        }                        
+                        $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
+                        $catColumns[] = $cat->CATEGORY;                      
+                        $catTotals[] = $catTotal/$k;
+                    }
+
+                    // $scorePairs[] = $catColumns;
+                    // $scorePairs[] = $catTotals;
+                    $scorePairs[] = [$catColumns, $catTotals];           
+                }                 
+
+                $this->render('TechView', array("tech"=>$model,"map"=>$mapData, "scorepairs"=>$scorePairs));               
             }
+        }
+
+        public function validateQuestion($questions, $Id){
+            $found = false;
+            foreach($questions as $q){
+                if($q->ID = $Id){
+                    $found = true;
+                }
+            }
+            return $found;
         }
         
         public function actionAddTech($message=""){

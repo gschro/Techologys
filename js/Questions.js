@@ -365,7 +365,7 @@ function getCategoryPairData(){
         success: function(data){
             var dat = JSON.parse(data);
             $("#listofcategorypairs").empty();
-            alert(JSON.stringify(dat)+" TEST");
+           // alert(JSON.stringify(dat)+" TEST");
             for(var i = 0; i < dat.categorypairs.length; i++){
                // alert(dat.questions[i].QUESTION);
                 //alert(dat.questions);
