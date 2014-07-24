@@ -32,7 +32,8 @@
                          ?>
                      </p>
                  </div>
-                 <div class="row" id="charts">
+                 <div class="row">
+                    <ul id="charts"></ul>
                  </div>
                  <div class="row">
                      <span class="span6 offset2">

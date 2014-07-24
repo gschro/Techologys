@@ -103,12 +103,13 @@ function loadSubCats(){
 //                                     <h3>Growth</h3>
 //                                     <p>Heres a graph about stuff</p>
 //                                     <div id="scoreChart'+i+'" style="width: 350px; height: 350px;"></div>';
-            var test = $('<ul><li style="width: 220px; display: inline-block;">'
+//                                  +'  <h3></h3>'
+                                   //+' <p>'+dat[i][0][1]+' and '+dat[i][0][1]+'</p>'
+            var test = $('<li style="width: 220px; display: inline-block;">'
                                    +' <img src="" alt="">'
                                    +' <div id="scoreChart'+i+'" style="width: 200px; height: 200px;"></div>   '                                     
-                                  +'  <h3>Growth</h3>'
-                                   +' <p>Heres a graph about stuff</p>'
-                                +'  </li></ul>');
+
+                                +'  </li>');
 //var test = $('<p>test</p>');
             $('#charts').append(test);
 
