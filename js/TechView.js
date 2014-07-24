@@ -91,6 +91,8 @@ function loadSubCats(){
               vAxis: {minValue: 0, maxValue: 10, title: dat[i][0][2], textPosition: 'none' },
               keepAspectRatio: true
             };
+
+           // stringID()
 // var listitem = document.createElement('p');
 // var h3 = document.createElement('h3');
 // h3.innerText = 'Growth';
@@ -126,7 +128,11 @@ function loadSubCats(){
       }
 
 
-
+function stringID(dataTable, rowNum){
+    // return dataTable.getValue(rowNum, 0).toString();
+    // return an empty string instead to avoid the bubble labels
+    return "";
+}
 
   
                             

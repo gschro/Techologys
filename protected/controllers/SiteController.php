@@ -325,7 +325,7 @@ class SiteController extends Controller
                     $cats = [];
                     $categoryPairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$pair->ID));
                     $catTotals = [];
-                    $catTotals[] = "Score";
+                    $catTotals[] = "";
                     $catColumns = []; 
                     $catColumns[] = "ID";
                     foreach($categoryPairs as $cp){
@@ -351,6 +351,8 @@ class SiteController extends Controller
 
                     // $scorePairs[] = $catColumns;
                     // $scorePairs[] = $catTotals;
+                    //$catColumns[] = "";
+                   // $catTotals[] = 1;
                     $scorePairs[] = [$catColumns, $catTotals];           
                 }                 
 
