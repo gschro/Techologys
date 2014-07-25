@@ -41,9 +41,11 @@
                      </span>
                  </div>
                  <div class="row">
+                    <p>
      <h3>Available for Licensing:</h3>
          <div id="chart_div" style="width: 900px; height: 500px;"></div>
-                    
+</p>
+<br>
                     <?php if($tech->USERID === $_SESSION['user']){?>
                      <p>
                          <a href="<?php echo Yii::app()->createUrl('Site/University')?>" class="btn btn-large" >Back</a>                        
