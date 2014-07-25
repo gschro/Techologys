@@ -347,7 +347,7 @@ class SiteController extends Controller
 
                         $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                         $catColumns[] = $cat->CATEGORY;                      
-                        $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
+                        $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''))*2;
                     }
 
                     // $scorePairs[] = $catColumns;
@@ -474,7 +474,7 @@ class SiteController extends Controller
                             }                        
                             $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                             $catColumns[] = $cat->CATEGORY;                      
-                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
+                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''))*2;
                         }
                         $scorePairs[] = [$catColumns, $catTotals];           
                     }                 
