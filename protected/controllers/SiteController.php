@@ -342,11 +342,12 @@ class SiteController extends Controller
                             if($quest->QUESTIONCATEGORYID === $cp->CATEGORYID){
                                 $catTotal += $cqv->VALUE;
                                 $k++;
-                            }
+                            }                                                    
                         }                        
+
                         $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                         $catColumns[] = $cat->CATEGORY;                      
-                        $catTotals[] = $catTotal/$k;
+                        $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
                     }
 
                     // $scorePairs[] = $catColumns;
@@ -355,8 +356,16 @@ class SiteController extends Controller
                    // $catTotals[] = 1;
                     $scorePairs[] = [$catColumns, $catTotals];           
                 }                 
-
-                $this->render('TechView', array("tech"=>$model,"map"=>$mapData, "scorepairs"=>$scorePairs));               
+                
+                $totalScore = 0;
+                $allQVs = QuestionValue::model()->findAllByAttributes(array("LISTINGID"=>$model->ID));
+                foreach($allQVs as $qv){
+                    $totalScore += $qv->VALUE;
+                }
+                
+                $totalScore = ($totalScore/count($allQVs))*20;
+                $totalScore = number_format((float)$totalScore, 2, '.', '');
+                $this->render('TechView', array("tech"=>$model,"map"=>$mapData, "scorepairs"=>$scorePairs,"totalscore"=>$totalScore));               
             }
         }
 
@@ -465,7 +474,7 @@ class SiteController extends Controller
                             }                        
                             $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                             $catColumns[] = $cat->CATEGORY;                      
-                            $catTotals[] = $catTotal/$k;
+                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
                         }
                         $scorePairs[] = [$catColumns, $catTotals];           
                     }                 
@@ -474,8 +483,8 @@ class SiteController extends Controller
 ///////////////////////////
                 //    $message ="further";
                 }
-                $score = $score/count($details);
-
+                $score = ($score/count($details))*20;
+                $score = number_format((float)$score, 2, '.', '');
                 $jsonDetails = CJSON::Encode($details);
                 $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries, "scorepairs"=>CJSON::Encode($scorePairs)));
             }

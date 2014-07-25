@@ -37,7 +37,7 @@
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: <?php echo $tech->TOTALSCORE ?> out of 100</h3>
+                         <h3>TechChute Score: <?php echo $totalscore; ?> out of 100</h3>
                      </span>
                  </div>
                  <div class="row">

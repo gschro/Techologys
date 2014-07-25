@@ -29,7 +29,7 @@
        var dat = '<?php echo $scorepairs; ?>';
       //  var dat = [['ID','Marketability','Growth'],['Score',5,6]];    
     //  dat = dat.replace(/\\/,"");
-      alert(dat);
+    //  alert(dat);
         var dat = JSON.parse(dat);
        // alert(dat[1][0]);
    // alert(dat.length);
