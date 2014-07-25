@@ -43,35 +43,22 @@
                      </p>
                  </div>
                  <div class="row">
-                    <ul class="thumbnails">
-                        <li class="span5">
-                                <img src="http://ts3.mm.bing.net/th?id=H.4825671903742110&pid=1.7" alt="">
-                            <h3>Growth</h3>
-                            <p>Here's a graph about stuff</p>
-                        </li>    
-                        <li class="span5">
-                                <img src="http://ts3.mm.bing.net/th?id=H.4825671903742110&pid=1.7" alt="">
-                            <h3>Marketability</h3>
-                            <p>Here's another graph about more stuff</p>                    
-                        </li> 
-                    </ul>                     
+                    <ul id="charts"></ul>
                  </div>
                  <div class="row">
                      <span class="span6 offset2">
-                         <h3>TechChute Score: <?php //echo $listing->TOTALSCORE; ?>56 out of 100</h3>
+                         <h3>TechChute Score: <?php echo $score; ?>56 out of 100</h3>
                      </span>
                  </div>
                  <div class="row">
-                                    <h3>Available for Licensing:</h3>
-                                                    <div id="chart_div" style="width: 900px; height: 500px;"></div>
+                    <h3>Available for Licensing:</h3>
+                    <div id="chart_div" style="width: 900px; height: 500px;"></div>
 
                  </div>
                 <script>
-              //           $(document).ready(function () {
-                    google.load('visualization', '1', {'packages': ['geochart']});
+                    google.load('visualization', '1', {'packages': ['geochart','corechart']});
                     google.setOnLoadCallback(drawRegionsMap);   
-           
-       //  });
+                    google.setOnLoadCallback(drawChart); 
                 </script>
 
                      <br>

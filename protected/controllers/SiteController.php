@@ -436,12 +436,48 @@ class SiteController extends Controller
                     $score += $qv->VALUE;
 
                 }
+
+//////////////////////////////
+
+                    $pairings = Pairing::model()->findAll();
+                    $categories = [];
+                    $scorePairs = [];
+                    
+                    foreach($pairings as $pair){
+                        $cats = [];
+                        $categoryPairs = CategoryPair::model()->findAllByAttributes(array("PAIRINGID"=>$pair->ID));
+                        $catTotals = [];
+                        $catTotals[] = '';
+                        $catColumns = []; 
+                        $catColumns[] = 'ID';
+                        foreach($categoryPairs as $cp){
+                            $catTotal = 0;
+                            $k = 1;
+                            foreach($details as $cqv){
+                             
+                                $quest = Question::model()->findByAttributes(array("NAME"=>$cqv->QUESTIONID));
+                                //echo $quest->QUESTIONCATEGORYID;
+                                if($quest->QUESTIONCATEGORYID === $cp->CATEGORYID){
+                                    $catTotal += $cqv->VALUE;
+                                    $k++;
+                                }
+                                //$catTotal = $cqv->QUESTIONID;
+                            }                        
+                            $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
+                            $catColumns[] = $cat->CATEGORY;                      
+                            $catTotals[] = $catTotal/$k;
+                        }
+                        $scorePairs[] = [$catColumns, $catTotals];           
+                    }                 
+
+
+///////////////////////////
                 //    $message ="further";
                 }
                 $score = $score/count($details);
 
                 $jsonDetails = CJSON::Encode($details);
-                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries));
+                $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries, "scorepairs"=>CJSON::Encode($scorePairs)));
             }
             catch(Exception $e){
                 //$this->render('AddTech');            
