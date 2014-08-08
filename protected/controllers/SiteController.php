@@ -445,7 +445,8 @@ class SiteController extends Controller
                 $score = 0;
                 foreach($questions as $question){
                     if(isset($question)){
-                        $qv = $this->createQuestionValue($listing->ID,$_POST[$question->NAME],$question->NAME);
+                        $displayVal = QuestionDisplay::model()->findByPk($_POST[$question->NAME]);
+                        $qv = $this->createQuestionValue($listing->ID,$displayVal->ACTUALVALUE,$question->NAME);
                 //    $details[] = $this->createQuestionValue($listing->ID,$_POST[$question->NAME],$question->NAME);
                         $details[] = $qv;
                     $score += $qv->VALUE;
@@ -480,7 +481,7 @@ class SiteController extends Controller
                             }                        
                             $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                             $catColumns[] = $cat->CATEGORY;                      
-                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''))*2;
+                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
                         }
                         $scorePairs[] = [$catColumns, $catTotals];           
                     }                 
@@ -489,7 +490,7 @@ class SiteController extends Controller
 ///////////////////////////
                 //    $message ="further";
                 }
-                $score = ($score/count($details))*20;
+                $score = ($score/count($details));
                 $score = number_format((float)$score, 2, '.', '');
                 $jsonDetails = CJSON::Encode($details);
                 $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries, "scorepairs"=>CJSON::Encode($scorePairs)));
