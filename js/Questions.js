@@ -392,7 +392,7 @@ function getLQValueData(){
 }
 
 function removeLQValue(){
-    alert( $("#listOfLQValues").val());
+  //  alert( $("#listOfLQValues").val());
 
     $.ajax({
       type: "POST",
