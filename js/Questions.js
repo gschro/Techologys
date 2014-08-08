@@ -34,7 +34,8 @@ $(document).ready(function () {
     })
     
     $("#remove").click(function(){
-        removeListingQuestion();
+        removeListingQuestion();  
+        $("#listOfLQValues").empty();       
     });
     
     $("#addLQ").click(function(){
@@ -314,7 +315,7 @@ function removeListingQuestion(){
       url: "<?php echo Yii::app()->createUrl('Admin/RemoveListingQuestion') ?>",
       data: {"qId":qid},
       success: function(data){
-          getListingQuestionData();              
+          getListingQuestionData();                     
       }
     });   
 }

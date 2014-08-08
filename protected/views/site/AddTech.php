@@ -169,14 +169,14 @@
 <?php include 'protected/views/layouts/Footer.php'?>
 
 <?php 
-function question($name, $question){
-    $question = '<label>'.$question.'</label>
-        <div class="well text-center">';
-    for($i=1; $i<6; $i++){
+function question($values, $quest){
+    $question = '<label>'.$quest->QUESTION.'</label>
+        <div class="well">';
+    for($i=0; $i<count($values); $i++){
         $question .= '   
-        <label class="radio inline">
-            <input type="radio" name="'.$name.'" id="'.$name.'" value="'.$i.'">
-            '.$i.'
+        <label class="radio">
+            <input type="radio" name="'.$quest->NAME.'" id="'.$quest->NAME.'" value="'.$values[$i]->ID.'">
+            '.$values[$i]->DISPLAYVALUE.'
         </label>   ';
     } 
     $question .= '</div>';
@@ -187,6 +187,6 @@ function question($name, $question){
 <?php 
 function questions($questions){
     foreach($questions as $question){
-        echo question($question->NAME,$question->QUESTION);       
+        echo question($question["Values"],$question["Question"]);       
     }
 }?>

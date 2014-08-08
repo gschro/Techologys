@@ -381,14 +381,20 @@ class SiteController extends Controller
         
         public function actionAddTech($message=""){
             $questions = Question::model()->findAll();
-            $ql = array(); 
-            $qr = array();
+            $ql = []; 
+            $qr = [];
             for($i=0;$i<count($questions);$i++){
+                $displayVals = [];
+                $dVals = QuestionDisplay::model()->findAllByAttributes(array("QUESTIONID"=>$questions[$i]->ID));                
+                $displayVals["Question"] = $questions[$i];
+                $displayVals["Values"] = $dVals;
                 if($i%2===0){
-                    $ql[] = $questions[$i];
+                    $ql[] = $displayVals;
+                    //$questions[$i];
                 }
                 else{
-                    $qr[] = $questions[$i];                    
+                    $qr[] = $displayVals;
+                    //$questions[$i];                    
                 }
             }//"Please fill out all required fields"
             $this->render('AddTech',array("questionsLeft"=>$ql,"questionsRight"=>$qr,"message"=>$message));

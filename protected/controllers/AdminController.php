@@ -249,6 +249,10 @@ class AdminController extends Controller
     public function actionRemoveListingQuestion(){
         $result = "";
         $question = Question::model()->findByPK($_POST['qId']);
+        $displayQVals = QuestionDisplay::model()->findAllByAttributes(array("QUESTIONID"=>$question->ID));
+        foreach($displayQVals as $dq){
+            $dq->delete();
+        }
         if($question->delete()){
             $result = "Success";
         }
