@@ -44,10 +44,11 @@
                     // echo $name;?>
                         <label>Project Summary</label>
                             <textarea rows="4" name="desc" class="span8" placeholder="Project Summary"></textarea>
-                            <span class="help-block">Please answer the following questions about your listing</span>                                                  
+                                                                            
                         <label class="checkbox">
                         <h4>Questions</h4>
-                        <span class="help-block">Rate from 1 to 5, 5 being most positive</span>                                                                                                              
+                        <span class="help-block">Please answer the following questions about your listing</span>                          
+                       <!-- <span class="help-block">Rate from 1 to 5, 5 being most positive</span> -->
                         <div class="row">
                             <div class="span4">
                                 <?php questions($questionsLeft);?>
