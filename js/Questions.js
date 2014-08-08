@@ -22,7 +22,16 @@ $(document).ready(function () {
 
     $("#category").change(function(){
         getListingQuestionData();
+        $("#listOfLQValues").empty();
+       // $('#listofquestions option:first-child').attr("selected", "selected");
+      // $("#listofquestions").
+       // getLQValueData();
     });
+
+    $("#listofquestions").click(function(){
+              $("#listOfLQValues").empty();
+              getLQValueData();
+    })
     
     $("#remove").click(function(){
         removeListingQuestion();
@@ -30,6 +39,16 @@ $(document).ready(function () {
     
     $("#addLQ").click(function(){
         addListingQuestion();
+    });
+
+    $("#addLQValues").click(function(){
+        addLQValues();
+    });
+
+    $("#removeLQValue").click(function(){
+        removeLQValue();
+        $("#listOfLQValues").empty();
+        getLQValueData();        
     });
 
     $("#addCP").click(function(){
@@ -328,6 +347,63 @@ function getListingQuestionData(){
             }
         }
     });
+}
+
+function addLQValues(){      
+      
+       //    alert("qid "+$("#listofquestions").val());
+       //   alert("dv "+$("#displayValue").val());
+       //  alert( "av"+ $("#actualValue").val()) ; 
+    $.ajax({
+      type: "POST",
+      url: "<?php echo Yii::app()->createUrl('Admin/AddLQVal') ?>",
+      data: {   
+                "listofquestions" : parseInt($("#listofquestions").val()),
+                "displayValue" : $("#displayValue").val(),
+                "actualValue" : $("#actualValue").val()
+            },
+      success: function(data){
+          var dat = JSON.parse(data);
+          getLQValueData();       
+          alert(dat.message);
+      }
+    });  
+}
+
+function getLQValueData(){
+    $.ajax({
+        type: "POST",
+        data: {"listofquestions" : $("#listofquestions").val()},
+        url: "<?php echo Yii::app()->createUrl('Admin/GetDisplayValues')?>",
+        success: function(data){
+            var dat = JSON.parse(data);
+            $("#listOfLQValues").empty();
+           // alert(data);
+            for(var i = 0; i < dat.displayvals.length; i++){
+             // for (var key in dat.displayvals){
+               // alert(dat.questions[i].QUESTION);
+                //alert(dat.questions);
+              // alert(dat.cat);
+                $("#listOfLQValues").append($("<option></option>")
+                .attr("value",dat.displayvals[i].ID).text(dat.displayvals[i].VALS));
+            }
+        }
+    });
+}
+
+function removeLQValue(){
+    alert( $("#listOfLQValues").val());
+
+    $.ajax({
+      type: "POST",
+      url: "<?php echo Yii::app()->createUrl('Admin/RemoveLQVal') ?>",
+      data: {'listOfLQValues' : $("#listOfLQValues").val()},
+      success: function(data){
+        var dat = JSON.parse(data);
+      //  alert(dat.message);
+        getCategoryPairData();              
+      }
+    });   
 }
 
 function addCategoryPair(){

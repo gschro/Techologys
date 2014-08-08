@@ -57,6 +57,54 @@ class AdminController extends Controller
                 echo CJSON::encode(array("message"=>$message, "messageType"=>$this->type));
         }
 
+        public function actionAddLQVal(){
+            $message = "Please enter values for Display and Actual";
+           
+            try{
+                $Display = new QuestionDisplay();
+                $Display->QUESTIONID = $_POST["listofquestions"];
+                $Display->DISPLAYVALUE = $_POST["displayValue"];
+                $Display->ACTUALVALUE = $_POST["actualValue"];       
+                if($Display->save()){
+                    $message = "Display Values successfully created!";
+                }
+                else{
+     //               $message = " validate ". CJSON::encode($CategoryPair->validate())." ". CJSON::encode($CategoryPair->getErrors());
+                    $message = "Failed to create Display Values: " . CJSON::encode($Display->getErrors());                    
+                }
+                
+            }
+            catch(Exception $e){
+                $message = "fail ".$e->getMessage();
+            }
+            echo CJSON::encode(array("message"=>$message, "messageType"=>$this->type));            
+        }
+
+        function actionRemoveLQVal(){
+           $result = "";
+            $displayVal = QuestionDisplay::model()->findByPK($_POST["listOfLQValues"]);
+            if($displayVal->delete()){
+                $result = "success";
+            }
+            else{
+                $result = CJSON::encode($displayVal->getErrors());
+            }            
+            echo CJSON::encode(array('message'=>$result));
+        }
+
+        public function actionGetDisplayValues(){    
+            $displayVals = [];
+            $displayValues = QuestionDisplay::model()->findAllByAttributes(array("QUESTIONID"=>$_POST["listofquestions"]));
+            foreach($displayValues as $dv){
+                $vals = [];
+                $vals["ID"] =  $dv->ID;
+                $vals["VALS"] = $dv->DISPLAYVALUE . " | " . $dv->ACTUALVALUE;
+                $displayVals[] = $vals;                                   
+             }
+
+            echo CJSON::encode(array('displayvals'=>$displayVals));            
+        }
+
         public function actionAddCategoryPair(){
             $message = "Please enter a Category and a Category";
            

@@ -60,15 +60,36 @@ select{
                                         }
                                     ?>
                                 </select><br>
+
                                 <div id="addLQ" class="btn btn-success" value="Add">Add</div>
                                 <input type="button" id="qlist" class="btn btn-default pull-right" value="View All"/> 
                        <div id="removeListingQuestion"><br>
                             <label>Current Questions</label>
                                 <select  multiple="multiple" id="listofquestions" class="span5" hidden>                        
+                                </select>                                                    
+                                <div id="remove" class="btn btn-danger">Remove</div><br> <br> 
+                    <div>
+                 <form class="" id="addListingQuestionValForm" name="addListingQuestionValForm" method="post" action="<?php echo Yii::app()->createUrl('Admin/AddLQVal')?>">
+
+                    <label>Display Value</label>                    
+                    <input type="text" id="displayValue" class="span4" name="displayValue"><br>
+                    <label>Actual Value</label>                    
+                    <input type="text" id="actualValue" class="span4" name="actualValue"><br>                    
+                    <input type="button" id="addLQValues" class="btn btn-success" value="Add">                                                    
+                       <div id="removeLQValues"><br>
+                            <label>Current Question Values (Display|Actual)</label>
+                                <select  multiple="multiple" id="listOfLQValues" class="span5" hidden>                        
                                 </select>                    
-                                <div id="remove" class="btn btn-danger">Remove</div>
-                        </div>                    
+                                <div id="removeLQValue" class="btn btn-danger">Remove</div>
+                        </div> 
+                        </form>  
+                    </div>
+                        </div> 
+
                 </form>
+
+                
+
                 <form class="well" id="qpform" name="qpform">
                     <h4>Add a Category Pair</h4>
                         <label>Categories</label>
