@@ -16,7 +16,7 @@ class QuestionDisplay extends CActiveRecord
 	 */
 	public function tableName()
 	{
-		return 'QUESTIONDISPLAY';
+		return 'questiondisplay';
 	}
 
 	/**
