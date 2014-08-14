@@ -347,7 +347,7 @@ class SiteController extends Controller
 
                         $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
                         $catColumns[] = $cat->CATEGORY;                      
-                        $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''))*2;
+                        $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
                     }
 
                     // $scorePairs[] = $catColumns;
@@ -362,9 +362,11 @@ class SiteController extends Controller
                 foreach($allQVs as $qv){
                     $totalScore += $qv->VALUE;
                 }
-                
-                $totalScore = ($totalScore/count($allQVs))*20;
-                $totalScore = number_format((float)$totalScore, 2, '.', '');
+                $questions = Question::model()->findAll();
+                $totalScore = $totalScore/count($allQVs);
+                $totalScore = intval($totalScore/count($questions));
+//                $totalScore = number_format((float)$totalScore, 2, '.', '');
+
                 $this->render('TechView', array("tech"=>$model,"map"=>$mapData, "scorepairs"=>$scorePairs,"totalscore"=>$totalScore));               
             }
         }
@@ -480,18 +482,17 @@ class SiteController extends Controller
                                 //$catTotal = $cqv->QUESTIONID;
                             }                        
                             $cat = QuestionCategory::model()->findByPk($cp->CATEGORYID);  
-                            $catColumns[] = $cat->CATEGORY;                      
-                            $catTotals[] = floatval(number_format((float)$catTotal/$k, 2, '.', ''));
+                         //   $tempScore = $catTotal/(float)$k;                                      
+                            $catColumns[] = $cat->CATEGORY." s".$score;  
+                                     
+                            $catTotals[] = floatval(number_format($catTotal/(float)$k, 2, '.', ''));
+                         //   $score += $tempScore;
                         }
                         $scorePairs[] = [$catColumns, $catTotals];           
                     }                 
 
-
-///////////////////////////
-                //    $message ="further";
                 }
-                $score = ($score/count($details));
-                $score = number_format((float)$score, 2, '.', '');
+
                 $jsonDetails = CJSON::Encode($details);
                 $this->render('PreviewTech',array("tech"=>$listing,"jsonDetails"=>$jsonDetails,"message"=>$message, "jsonListing"=>$jsonListing, "score"=>$score, "countries"=>$countries, "scorepairs"=>CJSON::Encode($scorePairs)));
             }

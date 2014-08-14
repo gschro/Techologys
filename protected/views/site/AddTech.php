@@ -93,10 +93,8 @@
                         </table>
 
 
-                        </div>
-                        <div class="row text-center">
-                            <input type="submit" id="preview" class="btn btn-large btn-primary" onclick="selectAll();" value="Preview Listing"/>  
-                        </div>
+                        </div><br>
+
                     </div>
                     <div class="span3">
                         <br><br><br>
@@ -163,7 +161,10 @@
                         </div>
                     </div>
                 </div>                               
-              </fieldset>             
+              </fieldset>          
+              <div class="row text-center">
+                <input type="submit" id="preview" class="btn btn-large btn-primary" onclick="selectAll();" value="Preview Listing"/>  
+              </div>
          </form>
      </div>
 
