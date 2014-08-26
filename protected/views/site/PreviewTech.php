@@ -5,7 +5,7 @@
      <div class ="container">
         <form method="post" action="<?php echo Yii::app()->createUrl('Site/ListTech')?>">
          <div class="row">             
-             <div class="span10">
+             <div class="col-md-10">
                  <div class="row">
                      <?php 
                      $listing = json_decode($jsonListing);
@@ -21,10 +21,10 @@
                      //echo $tech->NAME ?></h2>                     
                  </div>
                  <div class="row">                     
-                     <p class="span8">
+                     <p class="col-md-8">
                          <?php echo $listing->DESC ?>
                      </p>
-                     <p class="span2 offset7">
+                     <p class="col-md-2 offset7">
                          <?php 
                          $status = $listing->PATENTSTATUS;
                          $label = "";
@@ -37,7 +37,7 @@
                          else{
                              $label = "label-important";
                          }
-                        echo 'Pre-existing rights <span class="label '.$label.'">'.$status.'</span>'
+                        echo 'Pre-existing rights <col-md- class="label '.$label.'">'.$status.'</col-md->'
                          
                          ?>
                      </p>
@@ -46,9 +46,9 @@
                     <ul id="charts"></ul>
                  </div>
                  <div class="row">
-                     <span class="span6 offset2">
+                     <col-md- class="col-md-6 offset2">
                          <h3>TechChute Score: <?php echo $score; ?> out of 100</h3>
-                     </span>
+                     </col-md->
                  </div>
                  <div class="row">
                     <h3>Available for Licensing:</h3>
@@ -62,10 +62,10 @@
                 </script>
 
                      <br>
-                     <input type="submit" class="btn btn-large span3 offset2" value="List my Tech!" />
+                     <input type="submit" class="btn btn-large col-md-3 offset2" value="List my Tech!" />
 
              </div>
-             <div class="span2">
+             <div class="col-md-2">
                  Related Stocks<br><br>
                  <?php 
                     //load stocks here

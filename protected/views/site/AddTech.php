@@ -1,5 +1,5 @@
 
-<?php include 'protected/views/layouts/Header.php';?>
+<?php include 'protected/views/layouts/HeaderSecure.php';?>
 <script type="text/javascript">
     <?php include 'js/jquery.cookie.js';?>
 
@@ -30,10 +30,10 @@
          <form method="post" action="<?php echo Yii::app()->createUrl('Site/PreviewTech')?>">
             <fieldset>
                 <div class="row">
-                    <div class="span9">
+                    <div class="col-md-9">
                         <legend>Create Listing</legend>
                         <label>Name</label>
-                        <input type="text" id="name" name="name" class="span4" placeholder="Name">                            
+                        <input type="text" id="name" name="name" class="col-md-4" placeholder="Name">                            
                    <?php  
                    $listing = null;
                        if(isset(Yii::app()->request->cookies['jsonListing'])){
@@ -43,17 +43,17 @@
                    ////$name = Yii::app()->request->cookies['listingname']->value;
                     // echo $name;?>
                         <label>Project Summary</label>
-                            <textarea rows="4" name="desc" class="span8" placeholder="Project Summary"></textarea>
+                            <textarea rows="4" name="desc" class="col-md-8" placeholder="Project Summary"></textarea>
                                                                             
                         <label class="checkbox">
                         <h4>Questions</h4>
-                        <span class="help-block">Please answer the following questions about your listing</span>                          
-                       <!-- <span class="help-block">Rate from 1 to 5, 5 being most positive</span> -->
+                        <col-md- class="help-block">Please answer the following questions about your listing</col-md->                          
+                       <!-- <col-md- class="help-block">Rate from 1 to 5, 5 being most positive</col-md-> -->
                         <div class="row">
-                            <div class="span4">
+                            <div class="col-md-4">
                                 <?php questions($questionsLeft);?>
                             </div>
-                            <div class="span4">
+                            <div class="col-md-4">
                                 <?php questions($questionsRight);?>
                             </div>
                         </div>
@@ -96,7 +96,7 @@
                         </div><br>
 
                     </div>
-                    <div class="span3">
+                    <div class="col-md-3">
                         <br><br><br>
                         <div class="well">
                             <label>Main Category</label>

@@ -5,9 +5,10 @@
 	<meta name="language" content="en" />         
     <title>Techologys</title>
     <link rel="shortcut icon" type="image/x-icon" href="images/worldicon.png" />
-    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.min.css">    
+    <link rel="stylesheet" type="text/css" href="<?php echo Yii::app()->request->baseUrl; ?>/css/bootstrap.css">    
     <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/jquery.min.js"></script>     
-    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.min.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/bootstrap.js"></script>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/index.js"></script>    
  </head>
  <div class="TEST"></div>
  <?php
@@ -16,61 +17,113 @@
     $base = '';
     //$base = 'https://secure.BlueHost.com/~techolo3/';
 ?>
+<style>
+ul li:hover{
+    background-color: #E7E7E7;
+}
+
+.container .navbar-header, .container .collapse.navbar-collapse{
+  padding-top: 0px;
+}
+
+.row-centered {
+    text-align:center;
+}
+.col-centered {
+    display:inline-block;
+    float:none;
+    /* reset the text-align */
+    text-align:center;
+    /* inline-block space fix */
+    margin-right:-4px;
+}
+
+small{
+  margin: 5px;
+}
+
+     input, .row a, h1{
+      margin: 10px;
+      padding: 10px;
+      width:300px;
+      display: inline-block;
+     }
+     .row li{
+      list-style-type: none;
+     }
+
+  #footer{
+    background-color: #f8f8f8;
+  }
+</style>
  <body>
      
-     <div class ="navbar">
-         <div class="navbar-inner">
+     <div class ="navbar navbar-default" style="margin-bottom: 0px; margin-top: 0px">
+
              <div class="container">                                 
                 <!-- .btn-navbar is used as the toggle for collapsed navbar content -->                 
                 <!-- Be sure to leave the brand out there if you want it shown -->
-                <a class="brand" href="index.php">Techologys</a>
-                  
-                   <ul class="nav">
-                       <li><a href="<?php echo $base.Yii::app()->CreateUrl('Site/index')?>">Home</a></li>
-                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/University')?>">Post</a></li>
-                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/Investor')?>">Invest</a></li>
-                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/Mission')?>">Mission</a></li>
-                   </ul>
-                   <ul class="nav">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Account<b class="caret"></b></a>
-                        <ul class="dropdown-menu pull-right">
-                        <!--<li><a tabindex="-1" href="#">Settings</a></li>-->
-                        <?php       
-                        if(!isset($_SESSION)){session_start();}
-                            if(array_key_exists('user', $_SESSION)){                         
-                                echo"<li><a href='".Yii::app()->createUrl('Site/Logout')."' class='navbar-btn'>Log Out</a></li>";            
-                                $id = (string)$_SESSION['user'];
-                                $id = strval($id);
-                                $userModel = User::model()->findByPk($id);
-                                if(isset($userModel)){                            
-                                    if($userModel->ADMIN){
-                                        echo "<li><a href='".Yii::app()->createUrl('Admin/index')."' class='navbar-btn'>Admin</a></li>";
-                                    }
-                                }                
-                            }
-                            else{
-                                echo'<li><a tabindex="-1" href="'.Yii::app()->CreateUrl('Site/LoginView').'">Sign In</a></li>';
-                            }            
-                        ?>    
-                        <li><a tabindex="-1" href="#">Help</a></li>    
-                        </ul>
-                    </li>
-                </ul>
-
-
-                <div class="nav pull-right">
-                    <a type="submit"class="btn btn-success .navbar-btn pull-right" href="#">Search</a>&nbsp             
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="index.php">Techologys</a>
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                      <span class="sr-only">Toggle navigation</span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                      <span class="icon-bar"></span>
+                    </button>                      
                 </div>
 
-                <form class="navbar-search pull-right">
-                    <input type="text" class="search-query" style="height: 30" placeholder="Search">
-                </form>
+                <div class="collapse navbar-collapse">
+                   <ul class="nav navbar-nav">
+                       <li><a href="<?php echo $base.Yii::app()->CreateUrl('Site/index')?>">Home</a></li>
+                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/University')?>">Universities</a></li>
+                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/Investor')?>">Investors</a></li>
+                       <li><a href="<?php echo $base.Yii::app()->createUrl('Site/Mission')?>">Mission</a></li>
+                        <?php       
+                              if(!isset($_SESSION)){session_start();}
+                                  if(array_key_exists('user', $_SESSION)){                         
+                                      $id = (string)$_SESSION['user'];
+                                      $id = strval($id);
+                                      $userModel = User::model()->findByPk($id);
+                                      if(isset($userModel)){                            
+                                          if($userModel->ADMIN){
+                                              echo "<li><a href='".Yii::app()->createUrl('Admin/index')."'>Admin</a></li>";
+                                          }
+                                      }                
+                                  }       
+                        ?>   
+                   </ul>
+               <!--    <form class="navbar-form navbar-right" role="search">
+                      <div class="form-group">
+                        <input type="text" class="form-control" placeholder="Search">
+                      </div>
+                      <button type="submit" class="btn btn-success">Search</button>
+                    </form>-->
+                   <ul class="nav navbar-nav navbar-right">
+                              <?php       
+                              if(!isset($_SESSION)){session_start();}
+                                  if(array_key_exists('user', $_SESSION)){                         
+                                      echo"<li><a href='".Yii::app()->createUrl('Site/Logout')."'>Sign Out</a></li>";            
+                                      $id = (string)$_SESSION['user'];
+                                      $id = strval($id);
+                                      $userModel = User::model()->findByPk($id);
+                                      if(isset($userModel)){                            
+                                          if($userModel->ADMIN){
+                                            //  echo "<li><a href='".Yii::app()->createUrl('Admin/index')."'>Admin</a></li>";
+                                          }
+                                      }                
+                                  }
+                                  else{
+                                      echo'<li><a tabindex="-1" href="'.Yii::app()->CreateUrl('Site/LoginView').'">Sign In</a></li>';
+                                  }            
+                              ?>   
+                   </ul>                     
+                </div>
+                
 
-                <div class="navbar-text pull-left"><i class="icon-globe"></i> Latest News...</div>
 
-             </div><!-- container-->
-          </div><!-- navbar inner-->
+
+             </div><!-- container-->        
      </div><!-- navbar-->
      
        <?php      
