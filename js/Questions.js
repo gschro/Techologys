@@ -64,7 +64,7 @@ $(document).ready(function () {
         getCategoryPairs();
     });            
     
-    $("#scategory").click(function(){
+    $("#squestion").click(function(){
        getSecurityQuestions(); 
     });
     
@@ -470,7 +470,7 @@ function removeCategoryPair(){
 }
 
 function getSecurityQuestions(){
-    toggleBtn("#scategory");
+    toggleBtn("#squestion");
     $("#removeSecurityQuestion").toggle();
     var show = $("#removeSecurityQuestion").is(":visible");        
     if(show){            

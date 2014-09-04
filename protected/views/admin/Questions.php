@@ -28,17 +28,17 @@ select{
                 <legend>Listing Questions</legend>
                 <form class="well" name="cform" id="cform">
                     <h4>Add a Listing Question Category</h4>
-                    <label>Category</label>
-                    <input type="text" class="col-md-4" id="qcategory" name="qcategory" placeholder="Category">                    
-                    <br>
-                    <input type="button" id="addQCat" class="btn btn-success" value="Add"/>                    
-                    <input type="button" id="qcat" class="btn btn-default pull-right" value="View All"/>                                 
-                       <div id="removeQuestionCategory"><br>
-                            <label>Current Categories</label>
-                                <select  multiple="multiple" id="listofqcategories" class="col-md-5">                        
-                                </select>                    
-                                <div id="removeQCategory" class="btn btn-danger">Remove</div>
-                        </div>                                        
+                    <label class="col-md-6">Category</label>
+                    <div class = "row">
+                    <div class="col-md-6"><input type="text" id="qcategory" name="qcategory" placeholder="Category">                    </div>
+
+                    <div class="col-md-4"><input type="button" id="addQCat" class="btn btn-success" value="Add"/>     </div>               </div>
+                    <input type="button" id="qcat" class="btn btn-default" value="View All"/>                                 
+                       <div id="removeQuestionCategory" class="row"><br>
+                            <label>Current Categories</label><br>
+                            <select  multiple="multiple" id="listofqcategories" class="col-md-5"></select>               
+                            <div id="removeQCategory" class="btn btn-danger">Remove</div>
+                       </div>                                        
                 </form>
                 <form class="well" id="qform" name="qform">
                     <h4>Add a Listing Question</h4>
@@ -62,10 +62,10 @@ select{
                                 </select><br>
 
                                 <div id="addLQ" class="btn btn-success" value="Add">Add</div>
-                                <input type="button" id="qlist" class="btn btn-default pull-right" value="View All"/> 
+                                <input type="button" id="qlist" class="btn btn-default" value="View All"/> 
                        <div id="removeListingQuestion"><br>
                             <label>Current Questions</label>
-                                <select  multiple="multiple" id="listofquestions" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofquestions" class="col-md-5">                        
                                 </select>                                                    
                                 <div id="remove" class="btn btn-danger">Remove</div><br> <br> 
                     <div>
@@ -78,7 +78,7 @@ select{
                     <input type="button" id="addLQValues" class="btn btn-success" value="Add">                                                    
                        <div id="removeLQValues"><br>
                             <label>Current Question Values (Display|Actual)</label>
-                                <select  multiple="multiple" id="listOfLQValues" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listOfLQValues" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeLQValue" class="btn btn-danger">Remove</div>
                         </div> 
@@ -140,12 +140,12 @@ select{
                                 </select>
                                 <p>
                                     <div id="addCP" class="btn btn-success" value="Add">Add</div>                                
-                                    <input type="button" id="cplist" class="btn btn-default pull-right" value="View All"/>                                     
+                                    <input type="button" id="cplist" class="btn btn-default" value="View All"/>                                     
                                 </p>
                             </div>
                        <div id="removeCategoryPair"><br>
                             <label>Current Question Pairs</label>
-                                <select  multiple="multiple" id="listofcategorypairs" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofcategorypairs" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeCP" class="btn btn-danger">Remove</div>
                         </div>                    
@@ -157,10 +157,10 @@ select{
                     <input type="text" class="col-md-4" id="securityquestion" name="securityquestion" placeholder="Question">                    
                     <br>
                     <input type="button" id="addSQ" class="btn btn-success" value="Add"/>   
-                    <input type="button" id="squestion" class="btn btn-default pull-right" value="View All"/>                                                       
+                    <input type="button" id="squestion" class="btn btn-default" value="View All"/>                                                       
                        <div id="removeSecurityQuestion"><br>
                             <label>Security Questions</label>
-                                <select  multiple="multiple" id="listofsquestions" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofsquestions" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeSq" class="btn btn-danger">Remove</div>
                         </div>                                        
@@ -174,10 +174,10 @@ select{
                     <label>Category</label>
                     <input type="text" class="col-md-4" id="maincategory" name="maincategory" placeholder="Category"><br>                    
                     <input type="button" id="addMCat" class="btn btn-success" value="Add"> 
-                    <input type="button" id="maincats" class="btn btn-default pull-right" value="View All"/>                                   
+                    <input type="button" id="maincats" class="btn btn-default" value="View All"/>                                   
                        <div id="removeMainCat"><br>
                             <label>Main Categories</label>
-                                <select  multiple="multiple" id="listofmcats" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofmcats" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeMCat" class="btn btn-danger">Remove</div>
                         </div>                                                            
@@ -196,10 +196,10 @@ select{
                     <label>Sub Category</label>                    
                     <input type="text" id="subcategory" class="col-md-4" name="subcategory" placeholder="Sub Category"><br>
                     <input type="button" id="addSCat" class="btn btn-success" value="Add"> 
-                    <input type="button" id="subcats" class="btn btn-default pull-right" value="View All"/>                                                       
+                    <input type="button" id="subcats" class="btn btn-default" value="View All"/>                                                       
                        <div id="removeSubCat"><br>
                             <label>Sub Categories</label>
-                                <select  multiple="multiple" id="listofscats" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofscats" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeSCat" class="btn btn-danger">Remove</div>
                         </div>                                                            
@@ -223,10 +223,10 @@ select{
                     <label for="stock">Stock Symbol</label>                                        
                     <input type="text" id="stock" class="col-md-3" name="stock" placeholder="Stock Symbol"><br>                    
                     <input type="button" id="addSCatStock" class="btn btn-success" value="Add"> 
-                    <input type="button" id="subcatstocks" class="btn btn-default pull-right" value="View All"/>                                                       
+                    <input type="button" id="subcatstocks" class="btn btn-default" value="View All"/>                                                       
                        <div id="removeSubCatStock"><br>
                             <label>Stocks</label>
-                                <select  multiple="multiple" id="listofstocks" class="col-md-5" hidden>                        
+                                <select  multiple="multiple" id="listofstocks" class="col-md-5">                        
                                 </select>                    
                                 <div id="removeSCatStock" class="btn btn-danger">Remove</div>
                         </div>                                           
